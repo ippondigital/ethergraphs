@@ -1,0 +1,63 @@
+doctype transitional
+html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
+  head
+    meta(name='Author', content='ippon digital')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no; target-densityDpi=device-dpi')
+    title Voter Dapp Example
+    link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
+    link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
+    link(href='/css/index.css', rel='stylesheet', type='text/css')
+  body
+    .container
+        .row
+            .col-md-4
+            .col-md-4
+              section.login-form
+                form(method='post', action='', role='login')
+                    h3 Voter Dapp - View contract
+                    p. 
+                        Contract Address: #{pageData.contract_address}
+                    br
+                    table.table.table-striped.table-bordered
+                        tr
+                            th.
+                                Candidate
+                            th.
+                                Votes
+                        tr
+                            td.
+                                Rama
+                            td. 
+                                #{pageData.rama}
+                        tr
+                            td.
+                                Nick
+                            td. 
+                                #{pageData.nick}
+                        tr
+                            td.
+                                Jose
+                            td. 
+                                #{pageData.jose}
+                    br
+                    h3.
+                        Vote for a candidate
+                    br
+                    select.form-control(id="candidateSelect", name="candidateSelect")
+                            option(value="Rama") Rama
+                            option(value="Nick") Nick
+                            option(value="Jose") Jose
+                    br
+                    input.form-control.input-lg(type='input', name='walletAddress', placeholder='enter wallet address', value='')
+                    br
+                    button.btn.btn-lg.btn-primary.btn-block(type='submit', name='addVote') Vote
+                    br
+                    br
+                    h3.
+                        Transaction Details
+                    br
+                    p.
+                        #{pageData.transaction}
+
+            .col-md-4

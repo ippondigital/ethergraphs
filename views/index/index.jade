@@ -1,0 +1,33 @@
+doctype transitional
+html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
+    head
+        meta(name='Author', content='ippon digital')
+        meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+        meta(name='viewport', content='width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=no; target-densityDpi=device-dpi')
+        title Voter Dapp Example
+        link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
+        link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
+        link(href='/css/index.css', rel='stylesheet', type='text/css')
+    body
+        .container
+        .row
+            .col-md-4
+            .col-md-4
+              section.login-form
+                form(method='post', action='/', role='login')
+                    h3 Ether ENS Search
+                    if locals.pageData
+                        h4.red= pageData.response
+                    br
+                    input.form-control.input-lg(type='input', name='ensAddress', id='ensAddress', placeholder='enter .eth address', value='')
+                    br
+                    button.btn.btn-lg.btn-primary.btn-block(type='button', name='search-ens', id='search-ens') Search
+            .col-md-4
+        .row
+            .col-md-4
+            .col-md-4
+                .address-balance
+            .col-md-4
+    script(src="/js/jquery.js")
+    script(src="/js/bootstrap.js")
+    script(src="/js/library/index/index.js")
