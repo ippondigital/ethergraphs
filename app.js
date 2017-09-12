@@ -3,12 +3,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
 var Web3 = require('web3');
-var tokenTracker = require('eth-token-tracker');
+var request = require('request');
 
 var fs = require('fs');
 var waitUntil = require('wait-until');
-
-global.waitUntil = waitUntil;
 
 // Load jsdom, and create a window.
 var app = express();
@@ -29,7 +27,8 @@ app.use(session({
 web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/RpuGTgcQkvUn8HVGSJaz"));
 global.fs = fs;
 global.web3 = web3;
-global.tokenTrucker = tokenTracker;
+global.request = request;
+global.waitUntil = waitUntil;
 
 require('./routes/routes.js')(app);
 
