@@ -4,30 +4,55 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         meta(name='Author', content='ippon digital')
         meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi')
-        title Voter Dapp Example
+        title EtherStat - Ethereum Blockchain Explorer
         link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
         link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
         link(href='/css/index.css', rel='stylesheet', type='text/css')
     body
-        .container
         .row
-            .col-md-4
-            .col-md-4
-              section.login-form
-                form(method='post', action='/', role='login')
-                    h3 Ether ENS Search
-                    if locals.pageData
-                        h4.red= pageData.response
-                    br
-                    input.form-control.input-lg(type='input', name='ensAddress', id='ensAddress', placeholder='enter .eth address', value='')
-                    br
-                    button.btn.btn-lg.btn-primary.btn-block(type='button', name='search-ens', id='search-ens') Search
-            .col-md-4
-        .row
-            .col-md-4
-            .col-md-4
-                .address-balance
-            .col-md-4
+            .start-page
+                .col-md-4
+                .col-md-4
+                  section.login-form
+                    form(method='', action='', role='')
+                        img.img.responsive.center-block(src="/img/etherstat.png", alt="etherstat logo")
+                        h3.text-center Welcome to EtherStat.io
+                        h4.text-center Lets start by entering a wallet address
+                        if locals.pageData
+                            h4.red= pageData.response
+                        br
+                        input.form-control.input-lg(type='input', name='ethAddress', id='ethAddress', placeholder='enter wallet address', value='')
+                        br
+                        button.btn.btn-lg.btn-success.btn-block(type='button', name='search-eth', id='search-eth') Search
+                .col-md-4
+            .top-menu
+                .col-md-6
+                    img.img.img-responsive(src="/img/etherstat_small.png", alt="etherstat logo")
+                .col-md-6
+                    .col-md-8
+                    .col-md-4
+                        .spacer--s
+                            .input-group
+                                input.form-control(type='input', name='ethAddress', id='ethAddress', placeholder='enter wallet address', value='')
+                                span.input-group-btn
+                                    button.btn.btn-success(type='button', name='search-eth', id='search-eth') Search
+        .crypto-results
+            .row
+                .container
+                    .col-md-4
+                        .col-md-12
+                            .ether-cont
+                                .col-sm-5
+                                    .crypto-img-cont
+                                        img.img.img-responsive(src="/img/logos/ethereum.png", alt="ethereum logo")
+                                .col-sm-7
+                                    h2.crypto-title ETH
+                                    .ethereum-balance
+                        .col-md-12
+                            #crypto-balance.crypto-balance
+                    .col-md-8
+        #img-tmp
+
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js")
