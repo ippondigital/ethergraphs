@@ -90,7 +90,7 @@ $.ajaxQ = (function(){
 
                             if(arrToken[0]['balance'] > 0){
                                 var html = '<div class="crypto-cont"><div class="col-sm-5"><h3 class = "crypto-title">' + arrToken[0]['symbol'].trim() + '</h3></div><div class="col-sm-7"><h3 class = "crypto-value">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</h3></div></div>';
-                                $(".crypto-balance").append(html);
+                                $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
                             }
                         });
 
