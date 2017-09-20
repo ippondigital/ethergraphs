@@ -33,7 +33,7 @@ body{
 }
 
 .ether-cont{
-    background-color: #fff;
+    color: #fff;
     opacity: 0.7;
     height: 150px;
     width: 100%;
@@ -41,49 +41,86 @@ body{
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-h2.crypto-title{
+.ethereum-balance{
+    text-align: left;
+    color: #fff;
+    font-size: 25px;
+}
+
+h2.crypto-title, h3.crypto-title, h4.crypto-title{
     font-weight: bold;
-    font-size: 40px;
-    text-align: center;
-    margin: 0 0 15px 0;
+    text-align: left;
     color: #141f1f;
+}
+
+
+h2.crypto-title{
+    font-size: 40px;
+    margin: 0 0 15px 0;
+    color: #fff;
 }
 
 h3.crypto-title{
-    font-weight: bold;
     font-size: 30px;
-    text-align: center;
     margin: 15px 0 15px 0;
-    color: #141f1f;
 }
 
-h3.crypto-value{
+h4.crypto-title{
+    font-size: 15px;
+    margin: 15px 0 15px 0;
+}
+
+h2.crypto-value, h3.crypto-value{
     color: #141f1f;
     font-weight: bold;
-    font-size: 16px;
     text-align: center;
     margin: 0 0 0 0;
 }
 
+h2.crypto-value{
+    font-size: 25px;
+    color: #fff;
+}
+
+h3.crypto-value{
+    font-size: 14px;
+}
+
 .crypto-img-cont{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 10px;
 }
 
 .crypto-cont{
     background-color: #fff;
     opacity: 0.7;
-    height: 60px;
+    height: 40px;
     width: 100%;
     border-radius: 5px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin: 10px 0 10px 0;
+    margin: 5px 0 5px 0;
 }
 
 #img-tmp{
     visibility: hidden;
+}
+
+.alt-loader{
+    color: #fff;
+    font-size: 14px;
+    margin: 10px 0 10px 0;
+}
+
+.alt-loader-text{
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }

@@ -33,26 +33,31 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                     .col-md-6
                         .spacer--s
                             .input-group
-                                input.form-control(type='input', name='ethAddress', id='ethAddress', placeholder='enter wallet address', value='')
+                                input.form-control(type='input', name='ethAddressAgain', id='ethAddressAgain', placeholder='enter wallet address', value='')
                                 span.input-group-btn
-                                    button.btn.btn-success(type='button', name='search-eth', id='search-eth') Search
+                                    button.btn.btn-success(type='button', name='search-eth-again', id='search-eth-again') Search
         .spacer--l
         .crypto-results
             .row
                 .container
-                    .col-md-4
-                        .col-md-12
-                            .ether-cont
-                                .col-sm-5
-                                    .crypto-img-cont
-                                        img.img.img-responsive(src="/img/logos/ethereum.png", alt="ethereum logo")
-                                .col-sm-7
-                                    h2.crypto-title ETH
-                                    .ethereum-balance
-                        .col-md-12
+                    .col-md-12
+                        .ether-cont
+                            .col-sm-2
+                                .crypto-img-cont
+                                    img.img.img-responsive(src="/img/logos/ethereum.png", alt="ethereum logo")
+                            .col-sm-9
+                                .ethereum-balance
+                                    .crypto-value
+                    .col-md-12
+                        .col-md-2
+                            .alt-loader
+                                .col-xs-3.alt-loader-text
+                                    img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
+                                .col-xs-9.alt-loader-text
+                                    p Loading Tokens
                             #crypto-balance.crypto-balance
-                    .col-md-8
-        #img-tmp
+                        .col-md-9
+                            #crypto-txns.crypto-txns
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")

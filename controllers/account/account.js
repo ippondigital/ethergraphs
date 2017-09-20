@@ -72,6 +72,7 @@ exports.getBalance = function(req,res){
     response.push({symbol : 'eth', balance : balance});
     
     response = JSON.stringify(response);
+    res.status(200);
     res.send(response);
 
 }
@@ -97,7 +98,38 @@ exports.getToken = function(req,res){
     console.log("token balance is " + balance);
 
     var jsonResponse = JSON.stringify(arrReturn);
+    res.status(200);
     res.send(jsonResponse);
+}
+
+
+exports.getTxns = function(req,res){
+    
+    var address = req.params.address;
+    
+    requestPromise({
+        method: 'POST',
+        uri: 'http://api.etherscan.io/api?module=account&action=txlist&address='+address+'&startblock=0&endblock=99999999&sort=asc&apikey=TEC67NXQJ73I6X6U1QMRV4U5QWH1Z8SQX9',
+        body: {
+            val1 : 1,
+            val2 : 2
+        },
+        json: true // Automatically stringifies the body to JSON
+    }).then(function (parsedBody) {
+        
+        var jsonResponse = JSON.stringify(parsedBody);
+        res.status(200);
+        res.send(jsonResponse);
+        //console.log(parsedBody);
+        // POST succeeded...
+    })
+    .catch(function (err) {
+        console.log(err);
+        // POST failed...
+    });
+    //
+    
+    
 }
 
 function getTokenBalance(address, tokenAddress){
@@ -111,8 +143,4 @@ function getTokenBalance(address, tokenAddress){
     balance = balance.div(divisor);
     
     return balance;
-}
-
-exports.getTxns = function(req,res){
-    var address = req.params.address;
 }

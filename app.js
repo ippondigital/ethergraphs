@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var session = require('client-sessions');
 var Web3 = require('web3');
 var request = require('request');
+var requestPromise = require('request-promise');
 
 var fs = require('fs');
 var waitUntil = require('wait-until');
@@ -28,6 +29,7 @@ web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/RpuGT
 global.fs = fs;
 global.web3 = web3;
 global.request = request;
+global.requestPromise = requestPromise;
 global.waitUntil = waitUntil;
 
 require('./routes/routes.js')(app);

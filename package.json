@@ -21,6 +21,7 @@
     "jade": "^1.11.0",
     "mongodb": "^2.2.22",
     "request": "^2.81.0",
+    "request-promise": "^4.2.1",
     "wait-until": "0.0.2",
     "web3": "^0.19.1"
   },
