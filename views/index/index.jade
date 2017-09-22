@@ -8,6 +8,9 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
         link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
         link(href='/css/index.css', rel='stylesheet', type='text/css')
+        link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
+        link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
+
     body
         .row
             .start-page
@@ -54,12 +57,20 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                 .col-xs-3.alt-loader-text
                                     img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
                                 .col-xs-9.alt-loader-text
-                                    p Loading Tokens
+                                    p Searching Tokens
                             #crypto-balance.crypto-balance
-                        .col-md-9
+                        .col-md-10
+                            h4.crypto-title Last 25 Transactions
+                            #chart-container
+                            h4.crypto-title All Transactions
                             #crypto-txns.crypto-txns
+                        .col-md-4
+                        .col-md-4
+                        .col-md-4
+                            
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")
-    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js")
+    script(src="/js/chartist/chartist.min.js")
+    script(src="/js/chartist/chartist-plugin-tooltip.js")
     script(src="/js/library/index/index.js")

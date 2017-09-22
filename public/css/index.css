@@ -1,126 +1,111 @@
-h3, h4{
-    color: #fff;
-}
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22-Sep-2017, 21:30:31
+    Author     : ben
+*/
+h3, h4 {
+  color: #fff; }
 
-.spacer--s{
-    margin-top: 15px;
-}
+.spacer--s {
+  margin-top: 15px; }
 
-.spacer--l{
-    margin-top: 45px;
-}
+.spacer--l {
+  margin-top: 45px; }
 
 .red {
-    font-size: 20px;
-    color: red;
-}
+  font-size: 20px;
+  color: red; }
 
-.green{
-    font-size: 20px;
-    color: green;
-}
+.green {
+  font-size: 20px;
+  color: green; }
 
-body{
-    background-color: #141f1f;
-}
+body {
+  background-color: #141f1f; }
 
-.start-page{
-    margin-top: 200px;
-}
+.start-page {
+  margin-top: 200px; }
 
-.top-menu{
-    margin: 20px 20px 20px 20px;
-}
+.top-menu {
+  margin: 20px 20px 20px 20px; }
 
-.ether-cont{
-    color: #fff;
-    opacity: 0.7;
-    height: 150px;
-    width: 100%;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 5px;
-}
+.ether-cont {
+  color: #fff;
+  height: 150px;
+  width: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 5px; }
 
-.ethereum-balance{
-    text-align: left;
-    color: #fff;
-    font-size: 25px;
-}
+.ethereum-balance {
+  text-align: left;
+  color: #fff;
+  font-size: 25px; }
 
-h2.crypto-title, h3.crypto-title, h4.crypto-title{
-    font-weight: bold;
-    text-align: left;
-    color: #141f1f;
-}
+h2.crypto-title, h3.crypto-title, h4.crypto-title {
+  font-weight: bold;
+  text-align: left;
+  color: #fff; }
 
+h2.crypto-title {
+  font-size: 40px;
+  margin: 0 0 15px 0; }
 
-h2.crypto-title{
-    font-size: 40px;
-    margin: 0 0 15px 0;
-    color: #fff;
-}
+h3.crypto-title {
+  font-size: 30px;
+  margin: 15px 0 15px 0; }
 
-h3.crypto-title{
-    font-size: 30px;
-    margin: 15px 0 15px 0;
-}
+h4.crypto-title {
+  font-size: 15px;
+  margin: 15px 0 15px 0; }
 
-h4.crypto-title{
-    font-size: 15px;
-    margin: 15px 0 15px 0;
-}
+h2.crypto-value, h3.crypto-value {
+  color: #141f1f;
+  font-weight: bold;
+  text-align: center;
+  margin: 0 0 0 0; }
 
-h2.crypto-value, h3.crypto-value{
-    color: #141f1f;
-    font-weight: bold;
-    text-align: center;
-    margin: 0 0 0 0;
-}
+h2.crypto-value {
+  font-size: 25px;
+  color: #fff; }
 
-h2.crypto-value{
-    font-size: 25px;
-    color: #fff;
-}
+h3.crypto-value {
+  font-size: 14px; }
 
-h3.crypto-value{
-    font-size: 14px;
-}
+.crypto-img-cont {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px; }
 
-.crypto-img-cont{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: 10px;
-}
+.crypto-cont {
+  color: #fff;
+  height: 25px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 5px 0 5px 0;
+  font-size: 15px; }
 
-.crypto-cont{
-    background-color: #fff;
-    opacity: 0.7;
-    height: 40px;
-    width: 100%;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    margin: 5px 0 5px 0;
-}
+#img-tmp {
+  visibility: hidden; }
 
-#img-tmp{
-    visibility: hidden;
-}
+.alt-loader {
+  color: #fff;
+  font-size: 13px;
+  margin: 10px 0 10px 0; }
 
-.alt-loader{
-    color: #fff;
-    font-size: 14px;
-    margin: 10px 0 10px 0;
-}
+.alt-loader-text {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; }
 
-.alt-loader-text{
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-}
+/*# sourceMappingURL=index.css.map */

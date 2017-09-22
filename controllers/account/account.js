@@ -93,9 +93,9 @@ exports.getToken = function(req,res){
         arrReturn.push({symbol : token, balance : "0"});
     }
 
-    console.log(token);
-    console.log(tokenAddress);
-    console.log("token balance is " + balance);
+    //console.log(token);
+    //console.log(tokenAddress);
+    //console.log("token balance is " + balance);
 
     var jsonResponse = JSON.stringify(arrReturn);
     res.status(200);
@@ -107,21 +107,55 @@ exports.getTxns = function(req,res){
     
     var address = req.params.address;
     
+    Date.prototype.monthNames = [
+        "January", "February", "March",
+        "April", "May", "June",
+        "July", "August", "September",
+        "October", "November", "December"
+    ];
+
+    Date.prototype.getMonthName = function() {
+        return this.monthNames[this.getMonth()];
+    };
+    Date.prototype.getShortMonthName = function () {
+        return this.getMonthName().substr(0, 3);
+    };
+    
     requestPromise({
         method: 'POST',
         uri: 'http://api.etherscan.io/api?module=account&action=txlist&address='+address+'&startblock=0&endblock=99999999&sort=asc&apikey=TEC67NXQJ73I6X6U1QMRV4U5QWH1Z8SQX9',
-        body: {
-            val1 : 1,
-            val2 : 2
-        },
-        json: true // Automatically stringifies the body to JSON
+//        body: {
+//            val1 : 1,
+//            val2 : 2
+//        },
+//        json: true // Automatically stringifies the body to JSON
     }).then(function (parsedBody) {
         
-        var jsonResponse = JSON.stringify(parsedBody);
+        parsedBody = JSON.parse(parsedBody);
+        parsedBody = parsedBody['result'];
+    
+        var arrRtn = [];
+        
+        for (var i in parsedBody){
+            
+            var balance = parsedBody[i]['value'];
+            var divisor = new web3.BigNumber(10).toPower(18);
+            var timestamp = parseInt(parsedBody[i]['timeStamp']);
+            var humanDate = new Date( timestamp*1000);
+            
+            var theDate =  humanDate.getDay() + '-' + humanDate.getShortMonthName();
+
+            console.log(humanDate);
+
+            balance = (balance/divisor).toFixed(2);
+            arrRtn.push({from : parsedBody[i]['from'], to: parsedBody[i]['to'], value : balance, txnDate : theDate});
+        }
+        
+        var jsonResponse = JSON.stringify(arrRtn);
+
         res.status(200);
         res.send(jsonResponse);
-        //console.log(parsedBody);
-        // POST succeeded...
+
     })
     .catch(function (err) {
         console.log(err);

@@ -115,7 +115,7 @@ $( document ).ready(function() {
                 var arrToken = JSON.parse(response);
 
                 if(arrToken[0]['balance'] > 0){
-                    var html = '<div class="crypto-cont"><div class="col-sm-3"><h4 class = "crypto-title">' + arrToken[0]['symbol'].trim() + '</h4></div><div class="col-sm-9"><h3 class = "crypto-value">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</h3></div></div>';
+                    var html = '<div class="crypto-cont"><div class="col-sm-3 text-left">' + arrToken[0]['symbol'].trim() + '</div><div class="col-sm-9 text-right">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
                     $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
                 }
 
@@ -140,14 +140,48 @@ $( document ).ready(function() {
         request.done(function(response) {
 
             var result = JSON.parse(response);
-            var arrTxns = result['result'];
-
+            var arrTxns = result;
+            
+            var labels = [];
+            var series = [];
+            var counter = 0;
             for(var i in arrTxns){
-                console.log(arrTxns[i]['from']);
-                var html = "from txn is " + arrTxns[i]['from'] + "<br />";
+                
+                var fromAddress = arrTxns[i]['from'].toUpperCase();
+                var toAddress = arrTxns[i]['to'].toUpperCase();
+                address = address.toUpperCase();
+                
+                if(parseInt(arrTxns[i]['value']) !== 0 && counter < 25){
+                    if(address === fromAddress){
+                        labels.push(arrTxns[i]['txnDate']);
+                        series.push({meta: 'To: ' + toAddress, value: -Math.abs(arrTxns[i]['value'])});
+                    }else if(address === toAddress){
+                        labels.push(arrTxns[i]['txnDate']);
+                        series.push({meta: 'From: ' + fromAddress, value: arrTxns[i]['value']});
+                    }
+                    
+                    counter ++;
+                }
+      
+                var html = "txn date: " + arrTxns[i]['txnDate'] + " from txn is " + arrTxns[i]['from'] + ", to is " + arrTxns[i]['to'] + ", value is " + arrTxns[i]['value'] + "<br />";
                 $(".crypto-txns").append(html);
             }
-
+            
+            var data = {
+                // A labels array that can contain any sort of values
+                labels: labels,
+                // Our series array that contains series objects or in this case series data arrays
+                series: [
+                  series
+                ]
+            };
+            
+            console.log(data);
+            
+            drawGraph(data);
+            // As options we currently only set a static size of 300x200 px. We can also omit this and use aspect ratio containers
+            // as you saw in the previous example
+            
             //$(".crypto-txns").html(arrTxns);
             //$(".crypto-txns").fadeIn();
 
@@ -157,6 +191,19 @@ $( document ).ready(function() {
 //            }
 
         });
+    }
+    
+    
+    function drawGraph(data){
+        
+        new Chartist.Bar('#chart-container', data, {
+            fullWidth: true,
+            height: 400,
+            plugins: [
+              Chartist.plugins.tooltip()
+            ]
+        });
+
     }
 
 });
