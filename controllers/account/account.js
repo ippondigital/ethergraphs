@@ -179,8 +179,8 @@ exports.getTxns = function(req,res){
         
         var arrRtn = {};
         arrRtn['txns'] = txns;
-        arrRtn['totalFrom'] = totalFrom;
-        arrRtn['totalTo'] = totalTo;
+        arrRtn['totalFrom'] = Object.assign({},totalFrom);
+        arrRtn['totalTo'] = Object.assign({},totalTo);
         
         var jsonResponse = JSON.stringify(arrRtn);
 
