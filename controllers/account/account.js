@@ -105,7 +105,7 @@ exports.getToken = function(req,res){
 
 exports.getTxns = function(req,res){
     
-    var address = req.params.address;
+    var address = req.params.address.toUpperCase();
     
     Date.prototype.monthNames = [
         "January", "February", "March",
@@ -134,7 +134,9 @@ exports.getTxns = function(req,res){
         parsedBody = JSON.parse(parsedBody);
         parsedBody = parsedBody['result'];
     
-        var arrRtn = [];
+        var txns = [];
+        var totalFrom = [];
+        var totalTo = [];
         
         for (var i in parsedBody){
             
@@ -145,13 +147,44 @@ exports.getTxns = function(req,res){
             
             var theDate =  humanDate.getDay() + '-' + humanDate.getShortMonthName();
 
-            console.log(humanDate);
+            var fromAddress = parsedBody[i]['from'].toUpperCase();
+            var toAddress = parsedBody[i]['to'].toUpperCase();
 
             balance = (balance/divisor).toFixed(2);
-            arrRtn.push({from : parsedBody[i]['from'], to: parsedBody[i]['to'], value : balance, txnDate : theDate});
+            
+            txns.push({
+                from : fromAddress, 
+                to: toAddress, 
+                value : balance, 
+                txnDate : theDate
+            });
+        
+            if(balance > 0){
+                if(address === fromAddress){
+                    if(typeof totalTo[toAddress] !== 'undefined'){
+                        totalTo[toAddress] += parseFloat(balance);
+                    }else{
+                        totalTo[toAddress] = parseFloat(balance);
+                    }
+                }else{
+                    if(typeof totalFrom[fromAddress] !== 'undefined'){
+                        totalFrom[fromAddress] += parseFloat(balance);
+                    }else{
+                        totalFrom[fromAddress] = parseFloat(balance);
+                    }
+                }
+            }
+            
         }
         
+        var arrRtn = {};
+        arrRtn['txns'] = txns;
+        arrRtn['totalFrom'] = totalFrom;
+        arrRtn['totalTo'] = totalTo;
+        
         var jsonResponse = JSON.stringify(arrRtn);
+
+console.log(jsonResponse);
 
         res.status(200);
         res.send(jsonResponse);

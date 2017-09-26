@@ -140,7 +140,9 @@ $( document ).ready(function() {
         request.done(function(response) {
 
             var result = JSON.parse(response);
-            var arrTxns = result;
+console.log(response);
+return true;
+            var arrTxns = result['txns'];
             
             var labels = [];
             var series = [];
