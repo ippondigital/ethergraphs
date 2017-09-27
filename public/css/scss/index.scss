@@ -102,6 +102,11 @@ h3.crypto-value{
     align-items: center;
     flex-wrap: wrap;
     padding: 10px;
+    
+    img{
+        margin: 0 auto;
+    }
+    
 }
 
 .crypto-cont{
@@ -132,3 +137,25 @@ h3.crypto-value{
     flex-wrap: wrap;
 }
 
+.txn-table{
+    
+    color: #fff;
+    font-size: 11.5px;
+    
+    a{
+        color: #fff;
+    }
+    
+    a:hover{
+        text-decoration: underline;
+    }
+    
+    .bg-success{
+        background-color: #5cb85c!important;
+    }
+    
+    .bg-danger{
+        background-color: #d9534f!important;
+    }
+    
+}

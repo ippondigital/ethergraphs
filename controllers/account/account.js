@@ -139,13 +139,32 @@ exports.getTxns = function(req,res){
         var totalTo = [];
         
         for (var i in parsedBody){
-            
+
+//            { blockNumber: '3737706',
+//              timeStamp: '1495280035',
+//              hash: '0xbb706b8519b83b0f6973a79e3c760c7276b244d476242a38d5b8b5881f8131b1',
+//              nonce: '0',
+//              blockHash: '0x1ead616c5459a1437b1779d5dbc585295c2d33948f871c6c74485693f9e37fe2',
+//              transactionIndex: '24',
+//              from: '0xda5e00827ae142e398083a76f76b130bbd1b2271',
+//              to: '0x853028d51ab903a5c5814fb4d0b939820f3cd7ff',
+//              value: '10000000000000000',
+//              gas: '90000',
+//              gasPrice: '20000000000',
+//              isError: '0',
+//              input: '0x',
+//              contractAddress: '',
+//              cumulativeGasUsed: '1086648',
+//              gasUsed: '21000',
+//              confirmations: '579253' }
+
+
             var balance = parsedBody[i]['value'];
             var divisor = new web3.BigNumber(10).toPower(18);
             var timestamp = parseInt(parsedBody[i]['timeStamp']);
             var humanDate = new Date( timestamp*1000);
             
-            var theDate =  humanDate.getDay() + '-' + humanDate.getShortMonthName();
+            //var theDate =  humanDate.getDay() + '/' + humanDate.getMonth();
 
             var fromAddress = parsedBody[i]['from'].toUpperCase();
             var toAddress = parsedBody[i]['to'].toUpperCase();
@@ -153,13 +172,17 @@ exports.getTxns = function(req,res){
             balance = (balance/divisor).toFixed(2);
             
             txns.push({
+                timestamp : parsedBody[i]['timestamp'],
+                fullDate : ISODateString(humanDate),
+                hash : parsedBody[i]['hash'],
                 from : fromAddress, 
                 to: toAddress, 
                 value : balance, 
-                txnDate : theDate
+                txnDate : ISODayMonthString(humanDate),
+                gasUsed: parsedBody[i]['gasUsed']
             });
         
-            if(balance > 0){
+            if(balance > 0 && parsedBody[i]['isError'] === '0'){
                 if(address === fromAddress){
                     if(typeof totalTo[toAddress] !== 'undefined'){
                         totalTo[toAddress] += parseFloat(balance);
@@ -177,14 +200,33 @@ exports.getTxns = function(req,res){
             
         }
         
-        var arrRtn = {};
+        var newTotalFrom = [];
+        var newTotalTo = [];
+        
+        for(i in totalFrom){
+            newTotalFrom.push({address: i, value : totalFrom[i]})
+        }
+        
+        for(i in totalTo){
+            newTotalTo.push({address: i, value : totalTo[i]})
+        }
+
+        newTotalFrom = newTotalFrom.sort(function(a, b) {
+            return parseFloat(b.value) - parseFloat(a.value);
+        });
+        
+        newTotalTo = newTotalTo.sort(function(a, b) {
+            return parseFloat(b.value) - parseFloat(a.value);
+        });
+        
+        var arrRtn = {};        
         arrRtn['txns'] = txns;
-        arrRtn['totalFrom'] = Object.assign({},totalFrom);
-        arrRtn['totalTo'] = Object.assign({},totalTo);
+//        arrRtn['totalFrom'] = Object.assign({},totalFrom);
+//        arrRtn['totalTo'] = Object.assign({},totalTo);
+        arrRtn['totalFrom'] = newTotalFrom;
+        arrRtn['totalTo'] = newTotalTo;
         
         var jsonResponse = JSON.stringify(arrRtn);
-
-console.log(jsonResponse);
 
         res.status(200);
         res.send(jsonResponse);
@@ -210,4 +252,20 @@ function getTokenBalance(address, tokenAddress){
     balance = balance.div(divisor);
     
     return balance;
+}
+
+function ISODateString(d){
+    function pad(n){return n<10 ? '0'+n : n}
+    return d.getUTCFullYear()+'-'
+    + pad(d.getUTCMonth()+1)+'-'
+    + pad(d.getUTCDate())+' '
+    + pad(d.getUTCHours())+':'
+    + pad(d.getUTCMinutes())+':'
+    + pad(d.getUTCSeconds());
+}
+
+function ISODayMonthString(d){
+    function pad(n){return n<10 ? '0'+n : n}
+    return pad(d.getUTCDate())+'/'
+    + pad(d.getUTCMonth()+1);
 }

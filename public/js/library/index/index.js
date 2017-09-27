@@ -115,7 +115,7 @@ $( document ).ready(function() {
                 var arrToken = JSON.parse(response);
 
                 if(arrToken[0]['balance'] > 0){
-                    var html = '<div class="crypto-cont"><div class="col-sm-3 text-left">' + arrToken[0]['symbol'].trim() + '</div><div class="col-sm-9 text-right">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
+                    var html = '<div class="crypto-cont"><div class="col-sm-6 text-right">' + arrToken[0]['symbol'].trim() + '</div><div class="col-sm-6 text-left">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
                     $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
                 }
 
@@ -140,33 +140,56 @@ $( document ).ready(function() {
         request.done(function(response) {
 
             var result = JSON.parse(response);
-console.log(response);
-return true;
+
             var arrTxns = result['txns'];
-            
+            var fromTotals = result['totalFrom'];
+
+            var toTotals = result['totalTo'];
             var labels = [];
             var series = [];
             var counter = 0;
+            
             for(var i in arrTxns){
-                
+               
+                var rowStyle = '';
                 var fromAddress = arrTxns[i]['from'].toUpperCase();
                 var toAddress = arrTxns[i]['to'].toUpperCase();
                 address = address.toUpperCase();
-                
-                if(parseInt(arrTxns[i]['value']) !== 0 && counter < 25){
+
+                if(parseFloat(arrTxns[i]['value']) !== 0.00 && counter < 50){
                     if(address === fromAddress){
                         labels.push(arrTxns[i]['txnDate']);
                         series.push({meta: 'To: ' + toAddress, value: -Math.abs(arrTxns[i]['value'])});
+                        rowStyle = 'bg-success';
                     }else if(address === toAddress){
                         labels.push(arrTxns[i]['txnDate']);
                         series.push({meta: 'From: ' + fromAddress, value: arrTxns[i]['value']});
+                        rowStyle = 'bg-danger';
                     }
                     
                     counter ++;
                 }
       
-                var html = "txn date: " + arrTxns[i]['txnDate'] + " from txn is " + arrTxns[i]['from'] + ", to is " + arrTxns[i]['to'] + ", value is " + arrTxns[i]['value'] + "<br />";
-                $(".crypto-txns").append(html);
+                //var html = "txn date: " + arrTxns[i]['txnDate'] + " from txn is " + arrTxns[i]['from'] + ", to is " + arrTxns[i]['to'] + ", value is " + arrTxns[i]['value'] + "<br />";
+                $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
+            }
+            
+            var fromCounter = 0;
+            
+            for(var i in fromTotals){
+                if(fromCounter < 11){
+                    $('.table-received tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'] + '</td></tr>');
+                    fromCounter ++;
+                }  
+            }
+            
+            var toCounter = 0;
+            
+            for(var i in toTotals){
+                if(toCounter < 11){
+                    $('.table-sent tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'] + '</td></tr>');
+                    toCounter ++;
+                }  
             }
             
             var data = {
@@ -178,19 +201,7 @@ return true;
                 ]
             };
             
-            console.log(data);
-            
             drawGraph(data);
-            // As options we currently only set a static size of 300x200 px. We can also omit this and use aspect ratio containers
-            // as you saw in the previous example
-            
-            //$(".crypto-txns").html(arrTxns);
-            //$(".crypto-txns").fadeIn();
-
-//            if(arrToken[0]['balance'] > 0){
-//                var html = '<div class="crypto-cont"><div class="col-sm-5"><h4 class = "crypto-title">' + arrToken[0]['symbol'].trim() + '</h4></div><div class="col-sm-7"><h3 class = "crypto-value">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</h3></div></div>';
-//                $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
-//            }
 
         });
     }

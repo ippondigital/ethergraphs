@@ -42,7 +42,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         .spacer--l
         .crypto-results
             .row
-                .container
+                .container-fluid
                     .col-md-12
                         .ether-cont
                             .col-sm-2
@@ -54,20 +54,49 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                     .col-md-12
                         .col-md-2
                             .alt-loader
-                                .col-xs-3.alt-loader-text
-                                    img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
-                                .col-xs-9.alt-loader-text
+                                .col-xs-5.alt-loader-text.float-right
+                                    .col-xs-6
+                                    .col-xs-6
+                                        img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
+                                .col-xs-7.alt-loader-text
                                     p Searching Tokens
                             #crypto-balance.crypto-balance
-                        .col-md-10
-                            h4.crypto-title Last 25 Transactions
+                        .col-md-7
+                            h4.crypto-title Last 50 Transactions
                             #chart-container
                             h4.crypto-title All Transactions
                             #crypto-txns.crypto-txns
-                        .col-md-4
-                        .col-md-4
-                        .col-md-4
-                            
+                                table.table.table-inverse.table-responsive.txn-table
+                                    thead
+                                        tr
+                                            th Date
+                                            th Txn Hash
+                                            th From
+                                            th To
+                                            th Value
+                                            th Gas Used
+                                    tbody
+                                        tr
+                                        
+                        .col-md-3
+                            .col-md-12
+                                h4.crypto-title Top 10 Sent To Addresses
+                                table.table.table-inverse.table-responsive.txn-table.table-sent
+                                        thead
+                                            tr
+                                                th Address
+                                                th Total Eth
+                                        tbody
+                                            tr
+                            .col-md-12
+                                h4.crypto-title Top 10 Received From Addresses
+                                table.table.table-inverse.table-responsive.txn-table.table-received
+                                        thead
+                                            tr
+                                                th Address
+                                                th Total Eth
+                                        tbody
+                                            tr
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")
