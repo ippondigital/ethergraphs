@@ -122,4 +122,25 @@ h3.crypto-value {
   .txn-table .bg-danger {
     background-color: #d9534f !important; }
 
+.circle {
+  border-radius: 50%;
+  behavior: url(PIE.htc);
+  /* remove if you don't care about IE8 */
+  width: 175px;
+  height: 175px;
+  border: 3px solid #fff;
+  margin: 0 auto;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; }
+
+.total-failed, .total-gas {
+  margin: 0 auto; }
+
+.temp-loading {
+  width: 300px;
+  color: #fff;
+  margin-top: 20px; }
+
 /*# sourceMappingURL=index.css.map */

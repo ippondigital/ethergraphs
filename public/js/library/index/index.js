@@ -11,6 +11,10 @@ $( document ).ready(function() {
     $('.top-menu').hide();
     $('.crypto-results').hide();
     $('.alt-loader').hide();
+    $(".ether-cont").hide();
+    $(".top-10").hide();
+    $(".crypto-txns").hide();
+    $('#chart-container').hide();
     
     var timer;
     var tokens;
@@ -31,12 +35,11 @@ $( document ).ready(function() {
         var address = $("#ethAddress").val();
         
         $('.start-page').hide();
+        $('.total-cont').hide();
         $('.top-menu').fadeIn(800);
-        $(".ether-cont").hide();
-
+       
         getEthBalance(address);
         getTxns(address);
-
         //clear the timeout if its running
         clearTimeout(timer);
         //get all balances
@@ -46,6 +49,8 @@ $( document ).ready(function() {
         $(".ether-cont").fadeIn(800);
         $(".ethereum-balance").fadeIn(800);
         $('.alt-loader').fadeIn(800);
+        $(".top-10").fadeIn(800);
+        $(".crypto-txns").fadeIn(800);
         
     });
     
@@ -53,15 +58,24 @@ $( document ).ready(function() {
         
         var address = $("#ethAddressAgain").val();
         
+        $('.temp-loading').show();
+        
         $(".ether-cont").hide();
         $(".ethereum-balance").hide();
-        $('.alt-loader-text').hide();
         $('.alt-loader').hide();
-        
+        $('#chart-container').hide();
         $(".crypto-value").val("");
         $(".crypto-balance").html("");
+        $(".txn-table tbody").empty();
+        $(".table-sent tbody").empty();
+        $(".table-received tbody").empty();
+        $("#crypto-txns").hide();
+        $('.top-10-sent').hide();
+        $('.top-10-received').hide();
+        $('.total-gas').html('');
+        $('.total-failed').html('');
+        $('.total-cont').hide();
         
-        $("#crypto-txns").html("")
         
         getEthBalance(address);
         getTxns(address);
@@ -69,13 +83,13 @@ $( document ).ready(function() {
         clearTimeout(timer);
         //get all balances
         $(".crypto-balance").fadeIn();
-        
+
         getAltBalance(address, 0);
         
         $(".ether-cont").fadeIn(800);
         $(".ethereum-balance").fadeIn(800);
-        $('.alt-loader').fadeIn(800);       
-        
+        $('.alt-loader').fadeIn(800);
+
     });
     
     function getEthBalance(address){
@@ -132,6 +146,7 @@ $( document ).ready(function() {
      }
      
     function getTxns(address){
+        
         var request = $.ajax({
             url: "/account/" + address + "/txns/",
             type: "GET"
@@ -152,6 +167,9 @@ $( document ).ready(function() {
             var series = [];
             var counter = 0;
             
+            $("#crypto-txns").fadeIn(800);
+            $('.crypto-txns tbody').append('<tr></tr>');
+            
             for(var i in arrTxns){
                
                 var rowStyle = '';
@@ -159,7 +177,7 @@ $( document ).ready(function() {
                 var toAddress = arrTxns[i]['to'].toUpperCase();
                 address = address.toUpperCase();
 
-                if(parseFloat(arrTxns[i]['value']) !== 0.00 && counter < 50){
+                if(parseFloat(arrTxns[i]['value']) !== 0.00 && counter < 30){
                     if(address === fromAddress){
                         labels.push(arrTxns[i]['txnDate']);
                         series.push({meta: 'To: ' + toAddress, value: -Math.abs(arrTxns[i]['value'])});
@@ -172,21 +190,26 @@ $( document ).ready(function() {
                     
                     counter ++;
                 }
-      
                 //var html = "txn date: " + arrTxns[i]['txnDate'] + " from txn is " + arrTxns[i]['from'] + ", to is " + arrTxns[i]['to'] + ", value is " + arrTxns[i]['value'] + "<br />";
                 $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
             }
             
             var fromCounter = 0;
             
+            $('.top-10-received').fadeIn(800);
+            $('.table-received tbody').append('<tr></tr>');
+            
             for(var i in fromTotals){
-                if(fromCounter < 11){
+                if(fromCounter < 11){           
                     $('.table-received tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'] + '</td></tr>');
                     fromCounter ++;
                 }  
             }
             
             var toCounter = 0;
+            
+            $('.top-10-sent').fadeIn(800);
+            $('.table-sent tbody').append('<tr></tr>');
             
             for(var i in toTotals){
                 if(toCounter < 11){
@@ -195,8 +218,8 @@ $( document ).ready(function() {
                 }  
             }
             
-            $('.total-gas').html('<h4 class="text-center">'+gasTotal+'<h4>');
-            $('.total-failed').html('<h4 class="text-center">'+failedTotal+'<h4>');
+            $('.total-gas').html('<h4 class="text-center"> Total Gas Used <br /><br />'+gasTotal+'<h4>');
+            $('.total-failed').html('<h4 class="text-center">Total Failed Txns <br /><br />'+failedTotal+'<h4>');
             
             var data = {
                 // A labels array that can contain any sort of values
@@ -207,8 +230,13 @@ $( document ).ready(function() {
                 ]
             };
             
+            $('#chart-container').fadeIn(800);
+            $('.total-cont').fadeIn(800);
+            
             drawGraph(data);
-
+            
+            $('.temp-loading').fadeOut();
+            
         });
     }
     

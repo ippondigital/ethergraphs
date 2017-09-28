@@ -4,7 +4,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         meta(name='Author', content='ippon digital')
         meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi')
-        title EtherStat - Ethereum Blockchain Explorer
+        title EtherGraphs - Ethereum Blockchain Visualiser
         link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
         link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
         link(href='/css/index.css', rel='stylesheet', type='text/css')
@@ -19,7 +19,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                   section.login-form
                     form(method='', action='', role='')
                         img.img.responsive.center-block(src="/img/etherstat.png", alt="etherstat logo")
-                        h3.text-center Welcome to EtherStat.io
+                        h3.text-center Welcome to EtherGraphs
                         h4.text-center Lets start by entering a wallet address
                         if locals.pageData
                             h4.red= pageData.response
@@ -45,24 +45,30 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                 .container-fluid
                     .col-md-12
                         .ether-cont
-                            .col-sm-2
+                            .col-xs-2
                                 .crypto-img-cont
                                     img.img.img-responsive(src="/img/logos/ethereum.png", alt="ethereum logo")
-                            .col-sm-9
+                            .col-xs-9
                                 .ethereum-balance
                                     .crypto-value
+                                .temp-loading
+                                    .col-xs-2
+                                        img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
+                                    .col-xs-10
+                                        p loading transactions, please wait...
+                                
                     .col-md-12
                         .col-md-2
                             .alt-loader
                                 .col-xs-5.alt-loader.float-right
-                                    .col-md-6.col-xs-0
-                                    .col-md-6.col-xs-12
+                                    .col-md-4
+                                    .col-md-7.float-right
                                         img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
-                                .col-xs-7.alt-loader-text
+                                .col-xs-7.alt-loader-text.text-left
                                     p Searching Tokens
                             #crypto-balance.crypto-balance
                         .col-md-7
-                            h4.crypto-title Last 50 Transactions
+                            h4.crypto-title Last 30 Transactions
                             #chart-container
                             h4.crypto-title All Transactions
                             #crypto-txns.crypto-txns
@@ -75,34 +81,31 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                             th To
                                             th Value
                                             th Gas Used
-                                    tbody
-                                        tr
-                                        
+                                    tbody   
                         .col-md-3
-                            .col-md-12
+                            .col-md-12.top-10-sent
                                 h4.crypto-title Top 10 Sent To Addresses
                                 table.table.table-inverse.table-responsive.txn-table.table-sent
-                                        thead
-                                            tr
-                                                th Address
-                                                th Total Eth
-                                        tbody
-                                            tr
-                            .col-md-12
+                                    thead
+                                        tr
+                                            th Address
+                                            th Total Eth
+                                    tbody
+                            .col-md-12.top-10-received
                                 h4.crypto-title Top 10 Received From Addresses
                                 table.table.table-inverse.table-responsive.txn-table.table-received
-                                        thead
-                                            tr
-                                                th Address
-                                                th Total Eth
-                                        tbody
-                                            tr
-                            .col-md-12
-                                h4.text-center Total Gas Used
-                                    .total-gas
-                            .col-md-12
-                                h4.text-center Total Failed Txn's
-                                    .total-failed
+                                    thead
+                                        tr
+                                            th Address
+                                            th Total Eth
+                                    tbody
+                            .col-md-12.total-cont
+                                .col-md-6
+                                    .circle
+                                        .total-gas
+                                .col-md-6
+                                    .circle
+                                        .total-failed
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")
