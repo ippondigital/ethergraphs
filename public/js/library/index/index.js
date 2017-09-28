@@ -55,6 +55,7 @@ $( document ).ready(function() {
         
         $(".ether-cont").hide();
         $(".ethereum-balance").hide();
+        $('.alt-loader-text').hide();
         $('.alt-loader').hide();
         
         $(".crypto-value").val("");
@@ -73,10 +74,8 @@ $( document ).ready(function() {
         
         $(".ether-cont").fadeIn(800);
         $(".ethereum-balance").fadeIn(800);
-        $('.alt-loader').fadeIn(800);
+        $('.alt-loader').fadeIn(800);       
         
-        
-
     });
     
     function getEthBalance(address){
@@ -103,6 +102,8 @@ $( document ).ready(function() {
     function getAltBalance(address, i){
                         
         timer = setTimeout(function(){
+            
+            $('.alt-loader-text').html('Searching for ' + tokens[i]['symbol'])
                         
             var request = $.ajax({
                 url: "/account/" + address + "/token/" + tokens[i]['symbol'] + '/' + tokens[i]['address'],
@@ -143,8 +144,10 @@ $( document ).ready(function() {
 
             var arrTxns = result['txns'];
             var fromTotals = result['totalFrom'];
-
             var toTotals = result['totalTo'];
+            var gasTotal = result['totalGas'];
+            var failedTotal = result['totalFailed'];
+            
             var labels = [];
             var series = [];
             var counter = 0;
@@ -191,6 +194,9 @@ $( document ).ready(function() {
                     toCounter ++;
                 }  
             }
+            
+            $('.total-gas').html('<h4 class="text-center">'+gasTotal+'<h4>');
+            $('.total-failed').html('<h4 class="text-center">'+failedTotal+'<h4>');
             
             var data = {
                 // A labels array that can contain any sort of values

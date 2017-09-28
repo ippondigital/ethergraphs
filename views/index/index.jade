@@ -54,9 +54,9 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                     .col-md-12
                         .col-md-2
                             .alt-loader
-                                .col-xs-5.alt-loader-text.float-right
-                                    .col-xs-6
-                                    .col-xs-6
+                                .col-xs-5.alt-loader.float-right
+                                    .col-md-6.col-xs-0
+                                    .col-md-6.col-xs-12
                                         img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
                                 .col-xs-7.alt-loader-text
                                     p Searching Tokens
@@ -97,6 +97,12 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                                 th Total Eth
                                         tbody
                                             tr
+                            .col-md-12
+                                h4.text-center Total Gas Used
+                                    .total-gas
+                            .col-md-12
+                                h4.text-center Total Failed Txn's
+                                    .total-failed
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")

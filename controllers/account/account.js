@@ -137,6 +137,8 @@ exports.getTxns = function(req,res){
         var txns = [];
         var totalFrom = [];
         var totalTo = [];
+        var totalGas = 0;
+        var totalFailed = 0;
         
         for (var i in parsedBody){
 
@@ -182,7 +184,10 @@ exports.getTxns = function(req,res){
                 gasUsed: parsedBody[i]['gasUsed']
             });
         
+            totalGas += parseFloat(parsedBody[i]['gasUsed']);
+        
             if(balance > 0 && parsedBody[i]['isError'] === '0'){
+                
                 if(address === fromAddress){
                     if(typeof totalTo[toAddress] !== 'undefined'){
                         totalTo[toAddress] += parseFloat(balance);
@@ -195,6 +200,10 @@ exports.getTxns = function(req,res){
                     }else{
                         totalFrom[fromAddress] = parseFloat(balance);
                     }
+                }
+            }else{
+                if(parsedBody[i]['isError'] !== '0'){
+                    totalFailed++;
                 }
             }
             
@@ -225,6 +234,8 @@ exports.getTxns = function(req,res){
 //        arrRtn['totalTo'] = Object.assign({},totalTo);
         arrRtn['totalFrom'] = newTotalFrom;
         arrRtn['totalTo'] = newTotalTo;
+        arrRtn['totalGas'] = totalGas;
+        arrRtn['totalFailed'] = totalFailed;
         
         var jsonResponse = JSON.stringify(arrRtn);
 
