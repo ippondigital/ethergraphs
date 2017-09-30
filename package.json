@@ -29,9 +29,6 @@
     "web3": "^0.19.1"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Ben",
   "license": "ISC",
   "directories": {
