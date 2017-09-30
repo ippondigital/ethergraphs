@@ -67,7 +67,7 @@ body{
     font-size: 25px;
 }
 
-h2.crypto-title, h3.crypto-title, h4.crypto-title{
+h2.crypto-title, h3.crypto-title, h4.crypto-title, h5.crypto-title{
     font-weight: bold;
     text-align: left;
     color: #fff;
@@ -86,6 +86,11 @@ h3.crypto-title{
 
 h4.crypto-title{
     font-size: 15px;
+    margin: 15px 0 15px 0;
+}
+
+h5.crypto-title{
+    font-size: 13px;
     margin: 15px 0 15px 0;
 }
 
