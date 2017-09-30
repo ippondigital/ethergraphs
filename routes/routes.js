@@ -5,7 +5,6 @@ module.exports = function(app){
     
     //index
     app.get('/', index.start);
-    app.post('/', index.searchEns);
     
     app.get('/account/:address/balance', account.getBalance);
     app.get('/account/:address/txns', account.getTxns);

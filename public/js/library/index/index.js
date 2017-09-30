@@ -15,6 +15,7 @@ $( document ).ready(function() {
     $(".top-10").hide();
     $(".crypto-txns").hide();
     $('#chart-container').hide();
+    $('.alert').hide();
     
     var timer;
     var tokens;
@@ -95,7 +96,7 @@ $( document ).ready(function() {
     function getEthBalance(address){
         
         var request = $.ajax({
-          url: "/account/" + address + "/balance",
+          url: "/account/" + address + "/balance?handshake="+$('.handshake').val(),
           type: "GET",
         //  data: {id : menuId},
           dataType: "html"
@@ -111,6 +112,12 @@ $( document ).ready(function() {
             }
  
         });
+        
+        request.fail(function(msg){
+            $('.alert-danger').fadeIn();
+            $('.alert-danger').html('We are sorry there was a problem, please try again');
+            $('.alert-danger').delay(5000).fadeOut(800);
+        });
     }
         
     function getAltBalance(address, i){
@@ -120,7 +127,7 @@ $( document ).ready(function() {
             $('.alt-loader-text').html('Searching for ' + tokens[i]['symbol'])
                         
             var request = $.ajax({
-                url: "/account/" + address + "/token/" + tokens[i]['symbol'] + '/' + tokens[i]['address'],
+                url: "/account/" + address + "/token/" + tokens[i]['symbol'] + '/' + tokens[i]['address']+ "?handshake="+$('.handshake').val(),
                 type: "GET"
               //  data: {id : menuId},
             });
@@ -148,7 +155,7 @@ $( document ).ready(function() {
     function getTxns(address){
         
         var request = $.ajax({
-            url: "/account/" + address + "/txns/",
+            url: "/account/" + address + "/txns/?handshake="+$('.handshake').val(),
             type: "GET"
           //  data: {id : menuId},
         });
