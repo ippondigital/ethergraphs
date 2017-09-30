@@ -4,6 +4,9 @@
   "description": "beta app ethergraph",
   "main": "app.js",
   "server": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "bignumber.js": "^4.0.2",
     "body-parser": "^1.17.2",
