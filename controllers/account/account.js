@@ -149,11 +149,16 @@ exports.getTxns = function(req,res){
 
             var txns = [];
             var totalFrom = [];
+            var grandTotalFrom = 0;
+            var grandTotalTo = 0;
             var totalTo = [];
             var totalGas = 0;
             var totalFailed = 0;
+            var totalTxns = 0;
 
             for (var i in parsedBody){
+                
+                totalTxns++;
 
     //            { blockNumber: '3737706',
     //              timeStamp: '1495280035',
@@ -207,12 +212,17 @@ exports.getTxns = function(req,res){
                         }else{
                             totalTo[toAddress] = parseFloat(balance);
                         }
+                        
+                        grandTotalTo += parseFloat(balance);
+                        
                     }else{
                         if(typeof totalFrom[fromAddress] !== 'undefined'){
                             totalFrom[fromAddress] += parseFloat(balance);
                         }else{
                             totalFrom[fromAddress] = parseFloat(balance);
                         }
+                        
+                        grandTotalFrom += parseFloat(balance);
                     }
                 }else{
                     if(parsedBody[i]['isError'] !== '0'){
@@ -249,6 +259,9 @@ exports.getTxns = function(req,res){
             arrRtn['totalTo'] = newTotalTo;
             arrRtn['totalGas'] = totalGas;
             arrRtn['totalFailed'] = totalFailed;
+            arrRtn['grandTotalTo'] = grandTotalTo;
+            arrRtn['grandTotalFrom'] = grandTotalFrom;
+            arrRtn['totalTxns'] = totalTxns;
 
             var jsonResponse = JSON.stringify(arrRtn);
 

@@ -186,7 +186,7 @@ h3.crypto-value{
     flex-wrap: wrap;  
 }
 
-.total-failed, .total-gas{
+.total-failed, .total-gas, .grand-total-to, .grand-total-from{
     margin: 0 auto;
 }
 
@@ -194,4 +194,9 @@ h3.crypto-value{
     width: 300px;
     color: #fff;
     margin-top: 20px;
+}
+
+#network-container{
+    width: 100%;
+    height: 400px;
 }

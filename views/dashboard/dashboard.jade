@@ -1,0 +1,119 @@
+doctype transitional
+html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
+    head
+        meta(name='Author', content='ippon digital')
+        meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi')
+        title EtherGraphs beta - Ethereum Blockchain Visualiser
+        link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
+        link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
+        link(href='/css/index.css', rel='stylesheet', type='text/css')
+        link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
+        link(href='/js/vis.min.css', rel='stylesheet', type='text/css')
+        link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
+
+    body
+        .alert.alert-danger.fixed
+        .row
+            .top-menu
+                .col-md-6
+                    img.img.img-responsive(src="/img/etherstat_small.png", alt="etherstat logo")
+                .col-md-6
+                    .col-md-6
+                    .col-md-6
+                        .spacer--s
+                            .input-group
+                                input.form-control(type='input', name='ethAddressAgain', id='ethAddressAgain', placeholder='enter wallet address', value='')
+                                input(type='hidden', name='currentAddress', id='currentAddress' value='#{pageData.address}')
+                                input.handshake(type='hidden',name='handshake',value='#{pageData.handshake}')
+                                span.input-group-btn
+                                    button.btn.btn-success(type='button', name='search-eth-again', id='search-eth-again') Search
+                    .col-md-6
+                    .col-md-6
+                        .spacer--s
+                        h5.crypto-title
+                            | If you find this useful, please
+                            | <a href="https://etherscan.io/address/0x55454510732482cC62544d16f726a0e7e7E5D6D6" target="_blank">donate</a>
+                            | to keep this project going
+        .spacer--l
+        .crypto-results
+            .row
+                .container-fluid
+                    .col-md-12
+                        .ether-cont
+                            .col-xs-2
+                                .crypto-img-cont
+                                    img.img.img-responsive(src="/img/logos/ethereum.png", alt="ethereum logo")
+                            .col-xs-9
+                                .ethereum-balance
+                                    .crypto-value
+                                .temp-loading
+                                    .col-xs-2
+                                        img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
+                                    .col-xs-10
+                                        p loading transactions, please wait...
+                                
+                    .col-md-12
+                        .col-md-2
+                            .alt-loader
+                                .col-xs-5.alt-loader.float-right
+                                    .col-md-4
+                                    .col-md-7.float-right
+                                        img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
+                                .col-xs-7.alt-loader-text.text-left
+                                    p Searching Tokens
+                            #crypto-balance.crypto-balance
+                        .col-md-7
+                            h4.crypto-title Last 30 Transactions
+                            #chart-container
+                            h4.crypto-title Transaction Network
+                            #network-container
+                            h4.crypto-title All Transactions
+                            #crypto-txns.crypto-txns
+                                table.table.table-inverse.table-responsive.txn-table
+                                    thead
+                                        tr
+                                            th Date
+                                            th Txn Hash
+                                            th From
+                                            th To
+                                            th Value
+                                            th Gas Used
+                                    tbody   
+                        .col-md-3
+                            .col-md-12.top-10-sent
+                                h4.crypto-title Top 10 Sent To Addresses
+                                table.table.table-inverse.table-responsive.txn-table.table-sent
+                                    thead
+                                        tr
+                                            th Address
+                                            th Total Eth
+                                    tbody
+                            .col-md-12.top-10-received
+                                h4.crypto-title Top 10 Received From Addresses
+                                table.table.table-inverse.table-responsive.txn-table.table-received
+                                    thead
+                                        tr
+                                            th Address
+                                            th Total Eth
+                                    tbody
+                            .col-md-12.total-cont
+                                .col-md-6
+                                    .circle
+                                        .total-gas
+                                .col-md-6
+                                    .circle
+                                        .total-failed
+                                .col-md-6
+                                    .circle
+                                        .grand-total-from
+                                .col-md-6
+                                    .circle
+                                        .grand-total-to
+
+    script(src="/js/jquery.js")
+    script(src="/js/bootstrap.js")
+    script(src="/js/chartist/chartist.min.js")
+    script(src="/js/chartist/chartist-plugin-tooltip.js")
+    script(src="/js//vis.min.js")
+    script(src="/js/library/dashboard/dashboard.js")

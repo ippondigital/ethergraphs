@@ -1,15 +1,10 @@
 exports.start = function(req,res) {
     
     req.session.handshake = makeid();
-    
-    var pageData = {
-        pageData : {
-            handshake : req.session.handshake
-        }
-    };
-    
-    res.render('index/index', pageData);
+    res.render('index/index');
 };
+
+
 
 function redirectPage(res, pageLocation){
     return res.redirect(pageLocation);
