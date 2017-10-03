@@ -64,51 +64,54 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                     p Searching Tokens
                             #crypto-balance.crypto-balance
                         .col-md-7
-                            h4.crypto-title Last 30 Transactions
-                            #chart-container
-                            h4.crypto-title Transaction Network
-                            #network-container
-                            h4.crypto-title All Transactions
-                            #crypto-txns.crypto-txns
-                                table.table.table-inverse.table-responsive.txn-table
-                                    thead
-                                        tr
-                                            th Date
-                                            th Txn Hash
-                                            th From
-                                            th To
-                                            th Value
-                                            th Gas Used
-                                    tbody   
+                            .dashboard
+                                h4.crypto-title Last 30 Transactions
+                                #chart-container
+                            .dashboard
+                                h4.crypto-title Transaction Network
+                                #network-container
+                            .dashboard
+                                h4.crypto-title All Transactions
+                                #crypto-txns.crypto-txns
+                                    table.table.table-responsive.txn-table
+                                        thead
+                                            tr
+                                                th Date
+                                                th Txn Hash
+                                                th From
+                                                th To
+                                                th Value
+                                                th Gas Used
+                                        tbody   
                         .col-md-3
-                            .col-md-12.top-10-sent
+                            .col-md-12.top-10-sent.dashboard
                                 h4.crypto-title Top 10 Sent To Addresses
-                                table.table.table-inverse.table-responsive.txn-table.table-sent
+                                table.table.table-striped.table-responsive.table-sent.txn-table
                                     thead
                                         tr
                                             th Address
                                             th Total Eth
                                     tbody
-                            .col-md-12.top-10-received
+                            .col-md-12.top-10-received.dashboard
                                 h4.crypto-title Top 10 Received From Addresses
-                                table.table.table-inverse.table-responsive.txn-table.table-received
+                                table.table.table-striped.table-responsive.table-received.txn-table
                                     thead
                                         tr
                                             th Address
                                             th Total Eth
                                     tbody
-                            .col-md-12.total-cont
+                            .total-cont
                                 .col-md-6
-                                    .circle
+                                    .dashboard
                                         .total-gas
                                 .col-md-6
-                                    .circle
+                                    .dashboard
                                         .total-failed
                                 .col-md-6
-                                    .circle
+                                    .dashboard
                                         .grand-total-from
                                 .col-md-6
-                                    .circle
+                                    .dashboard
                                         .grand-total-to
 
     script(src="/js/jquery.js")

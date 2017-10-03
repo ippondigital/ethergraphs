@@ -1,6 +1,6 @@
 .ct-label {
-  fill: rgba(255, 255, 255, 0.4);
-  color: rgba(255, 255, 255, 0.4);
+  fill: rgba(77, 77, 77, 0.8);
+  color: rgba(77, 77, 77, 0.8);
   font-size: 0.9rem;
   line-height: 1; }
 
@@ -138,7 +138,7 @@
   text-anchor: end; }
 
 .ct-grid {
-  stroke: rgba(255, 255, 255, 0.2);
+  stroke: rgba(77, 77, 77, 0.8);
   stroke-width: 1px;
   stroke-dasharray: 2px; }
 

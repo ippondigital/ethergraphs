@@ -1,9 +1,11 @@
 doctype transitional
 html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
     head
-        meta(name='Author', content='ippon digital')
+        meta(name='Author', content='ethergraphs')
         meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi')
+        meta(name='description', content='An Ethereum blockchain visualiser with transaction tracking and trend analysis')
+        meta(name='keywords', content='ethereum, blockchain, explorer, visualise, graph, crypto, currency')
         title EtherGraphs beta - Ethereum Blockchain Visualiser
         link(href='/css/bootstrap.css', rel='stylesheet', type='text/css')
         link(href='/css/bootstrap-theme.css', rel='stylesheet', type='text/css')
@@ -12,22 +14,23 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
 
     body
-        .row
-            .start-page
-                .col-md-4
-                .col-md-4
-                  section.login-form
-                    form(method='', action='', role='')
-                        img.img.responsive.center-block(src="/img/etherstat.png", alt="etherstat logo")
-                        h3.text-center Welcome to EtherGraphs beta
-                        h4.text-center Lets start by entering a wallet address
-                        if locals.pageData
-                            h4.red= pageData.response
-                        br
-                        input.form-control.input-lg(type='input', name='ethAddress', id='ethAddress', placeholder='enter wallet address', value='')
-                        br
-                        button.btn.btn-lg.btn-success.btn-block(type='button', name='search-eth', id='search-eth') Search
-                .col-md-4
+        .container
+            .row
+                .start-page
+                    .col-md-3
+                    .col-md-6
+                      section.login-form
+                        form(method='', action='', role='')
+                            img.img.responsive.center-block(src="/img/etherstat.png", alt="etherstat logo")
+                            h3.text-center Welcome to EtherGraphs beta
+                            h4.text-center Lets start by entering a wallet address
+                            if locals.pageData
+                                h4.red= pageData.response
+                            br
+                            input.form-control.input-lg(type='input', name='ethAddress', id='ethAddress', placeholder='enter wallet address', value='')
+                            br
+                            button.btn.btn-lg.btn-success.btn-block(type='button', name='search-eth', id='search-eth') Search
+                    .col-md-3
 
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")

@@ -205,10 +205,10 @@ $( document ).ready(function() {
                 }  
             }
             
-            $('.total-gas').html('<h4 class="text-center"> Total Gas Used <br /><br />'+gasTotal+'<h4>');
-            $('.total-failed').html('<h4 class="text-center">Total Failed Txns <br /><br />'+failedTotal+'<h4>');
-            $('.grand-total-to').html('<h4 class="text-center">Total Sent <br /><br />'+grandTotalTo.toFixed(2)+'<h4>');
-            $('.grand-total-from').html('<h4 class="text-center">Total Received <br /><br />'+grandTotalFrom.toFixed(2)+'<h4>');
+            $('.total-gas').html('<h5 class="crypto-title text-center"> Total Gas Used<h5><h4 class="crypto-title text-center">'+gasTotal+'<h4>');
+            $('.total-failed').html('<h5 class="crypto-title text-center">Total Failed Txns<h5><h4 class="crypto-title text-center">'+failedTotal+'<h4>');
+            $('.grand-total-to').html('<h5 class="crypto-title text-center">Total Sent<h5><h4 class="crypto-title text-center">'+grandTotalTo.toFixed(2)+' ETH<h4>');
+            $('.grand-total-from').html('<h5 class="crypto-title text-center">Total Received <h5><h4 class="crypto-title text-center">'+grandTotalFrom.toFixed(2)+' ETH<h4>');
             
             var data = {
                 // A labels array that can contain any sort of values
