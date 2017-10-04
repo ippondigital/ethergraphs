@@ -26,12 +26,13 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                 input.form-control(type='input', name='ethAddressAgain', id='ethAddressAgain', placeholder='enter wallet address', value='')
                                 input(type='hidden', name='currentAddress', id='currentAddress' value='#{pageData.address}')
                                 input.handshake(type='hidden',name='handshake',value='#{pageData.handshake}')
+                                input#txn-stash(type='hidden',name='txn-stash',value='')
                                 span.input-group-btn
                                     button.btn.btn-success(type='button', name='search-eth-again', id='search-eth-again') Search
                     .col-md-6
                     .col-md-6
                         .spacer--s
-                        h5.crypto-title
+                        h5.crypto-title-white
                             | If you find this useful, please
                             | <a href="https://etherscan.io/address/0x55454510732482cC62544d16f726a0e7e7E5D6D6" target="_blank">donate</a>
                             | to keep this project going
@@ -55,14 +56,12 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                 
                     .col-md-12
                         .col-md-2
-                            .alt-loader
-                                .col-xs-5.alt-loader.float-right
-                                    .col-md-4
-                                    .col-md-7.float-right
-                                        img.img.img-responsive(src="/img/loading.gif", alt="loading gif")
-                                .col-xs-7.alt-loader-text.text-left
-                                    p Searching Tokens
-                            #crypto-balance.crypto-balance
+                            .col-xs-12
+                                .alt-loader
+                                    .alt-loader-text
+                                        p Searching Tokens
+                            .col-xs-12
+                                #crypto-balance.crypto-balance
                         .col-md-7
                             .dashboard
                                 h4.crypto-title Last 30 Transactions
@@ -72,6 +71,7 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                 #network-container
                             .dashboard
                                 h4.crypto-title All Transactions
+                                #pagination-cont
                                 #crypto-txns.crypto-txns
                                     table.table.table-responsive.txn-table
                                         thead
@@ -101,6 +101,9 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                                             th Total Eth
                                     tbody
                             .total-cont
+                                .col-md-6
+                                    .dashboard
+                                        .total-txns
                                 .col-md-6
                                     .dashboard
                                         .total-gas

@@ -103,7 +103,8 @@ $( document ).ready(function() {
                         
         timer = setTimeout(function(){
             
-            $('.alt-loader-text').html('Searching for ' + tokens[i]['symbol'])
+            $('.alt-loader-text').html('Searching for ' + tokens[i]['symbol']);
+            $('.alt-loader-text').fadeIn();
                         
             var request = $.ajax({
                 url: "/account/" + address + "/token/" + tokens[i]['symbol'] + '/' + tokens[i]['address']+ "?handshake="+$('.handshake').val(),
@@ -116,7 +117,7 @@ $( document ).ready(function() {
                 var arrToken = JSON.parse(response);
 
                 if(arrToken[0]['balance'] > 0){
-                    var html = '<div class="crypto-cont"><div class="col-sm-6 text-right">' + arrToken[0]['symbol'].trim() + '</div><div class="col-sm-6 text-left">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
+                    var html = '<div class="dashboard"><div class="col-xs-6 text-center">' + arrToken[0]['symbol'].trim() + '</div><div class="col-xs-6 text-center">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
                     $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
                 }
 
@@ -127,6 +128,8 @@ $( document ).ready(function() {
             getAltBalance(address, i);
             
         },2000);
+
+        $('.alt-loader-text').fadeOut(1500);
 
      }
      
@@ -143,12 +146,15 @@ $( document ).ready(function() {
             var result = JSON.parse(response);
 
             var arrTxns = result['txns'];
+            var base64 = btoa(response);
+            document.getElementById('txn-stash').value = base64;
             var fromTotals = result['totalFrom'];
             var toTotals = result['totalTo'];
             var gasTotal = result['totalGas'];
             var failedTotal = result['totalFailed'];
             var grandTotalTo = result['grandTotalTo'];
             var grandTotalFrom = result['grandTotalFrom'];
+            var totalTxns = result['totalTxns'];
             
             var labels = [];
             var series = [];
@@ -159,7 +165,7 @@ $( document ).ready(function() {
             
             for(var i in arrTxns){
                
-                var rowStyle = '';
+                
                 var fromAddress = arrTxns[i]['from'].toUpperCase();
                 var toAddress = arrTxns[i]['to'].toUpperCase();
                 address = address.toUpperCase();
@@ -168,48 +174,48 @@ $( document ).ready(function() {
                     if(address === fromAddress){
                         labels.push(arrTxns[i]['txnDate']);
                         series.push({meta: 'To: ' + toAddress, value: -Math.abs(arrTxns[i]['value'])});
-                        rowStyle = 'bg-danger';
+                        //rowStyle = 'bg-danger';
                     }else if(address === toAddress){
                         labels.push(arrTxns[i]['txnDate']);
                         series.push({meta: 'From: ' + fromAddress, value: arrTxns[i]['value']});
-                        rowStyle = 'bg-success';
+                        //rowStyle = 'bg-success';
                     }
                     
                     counter ++;
                 }
                 //var html = "txn date: " + arrTxns[i]['txnDate'] + " from txn is " + arrTxns[i]['from'] + ", to is " + arrTxns[i]['to'] + ", value is " + arrTxns[i]['value'] + "<br />";
-                $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
+                //$('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
             }
             
             var fromCounter = 0;
+            var toCounter = 0;
             
             $('.top-10-received').fadeIn(800);
             $('.table-received tbody').append('<tr></tr>');
             
             for(var i in fromTotals){
-                if(fromCounter < 11){           
-                    $('.table-received tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'] + '</td></tr>');
+                if(fromCounter < 10){           
+                    $('.table-received tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'].toFixed(2) + '</td></tr>');
                     fromCounter ++;
                 }  
             }
-            
-            var toCounter = 0;
             
             $('.top-10-sent').fadeIn(800);
             $('.table-sent tbody').append('<tr></tr>');
             
             for(var i in toTotals){
-                if(toCounter < 11){
-                    $('.table-sent tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'] + '</td></tr>');
+                if(toCounter < 10){
+                    $('.table-sent tr:last').after('<tr><<td><a href="https://etherscan.io/address/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'].toFixed(2) + '</td></tr>');
                     toCounter ++;
                 }  
             }
             
+            $('.total-txns').html('<h5 class="crypto-title text-center">Total Txn\'s <h5><h4 class="crypto-title text-center">'+totalTxns+'<h4>');
             $('.total-gas').html('<h5 class="crypto-title text-center"> Total Gas Used<h5><h4 class="crypto-title text-center">'+gasTotal+'<h4>');
             $('.total-failed').html('<h5 class="crypto-title text-center">Total Failed Txns<h5><h4 class="crypto-title text-center">'+failedTotal+'<h4>');
             $('.grand-total-to').html('<h5 class="crypto-title text-center">Total Sent<h5><h4 class="crypto-title text-center">'+grandTotalTo.toFixed(2)+' ETH<h4>');
             $('.grand-total-from').html('<h5 class="crypto-title text-center">Total Received <h5><h4 class="crypto-title text-center">'+grandTotalFrom.toFixed(2)+' ETH<h4>');
-            
+
             var data = {
                 // A labels array that can contain any sort of values
                 labels: labels,
@@ -249,6 +255,8 @@ $( document ).ready(function() {
             drawNetwork(addressNodes,connections,formattedData,counter, address);
             
             $('.temp-loading').fadeOut();
+            
+            getTxnTable(base64,1);
             
         });
     }
@@ -334,6 +342,58 @@ $( document ).ready(function() {
             });
             
         });
+    }
+    
+    function getTxnTable(base64, page){
+        
+        var rowStyle = '';
+        var response = atob(base64);
+        response = JSON.parse(response);
+        
+        var arrTxns = response['txns'];
+        var totalTxns = response['totalTxns'];
+        var pages = parseInt(totalTxns/30);
+        
+        var pagination = '<nav aria-label="Page navigation example"><ul class="pagination"><li class="page-item"><a class="page-link" href="#">Previous</a></li>';
+        
+        
+        var i = 1;
+        
+        while(i <= pages){
+            pagination += '<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>';
+            i++;
+        }
+        
+        pagination += '<li class="page-item"><a class="page-link" href="#">Next</a></li></ul></nav>';
+         
+        var counter = 1;
+         
+        for(var i in arrTxns){
+   
+            var fromAddress = arrTxns[i]['from'].toUpperCase();
+            var toAddress = arrTxns[i]['to'].toUpperCase();
+            var endCounter = 30 * page;
+            var startCounter = endCounter - 30;
+            
+            address = address.toUpperCase();
+
+            if(counter >= startCounter && counter <= endCounter){
+                
+                if(parseFloat(arrTxns[i]['value']) !== 0.00){
+                    if(address === fromAddress){
+                        rowStyle = 'bg-danger';
+                    }else if(address === toAddress){
+                        rowStyle = 'bg-success';
+                    }
+                }
+                
+                $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
+            } 
+            
+            counter ++;
+        }
+
+        $('#pagination-cont').html(pagination);
     }
 
 });
