@@ -72,6 +72,20 @@ $( document ).ready(function() {
         window.location.href = '/dashboard/' + address;
     });
     
+    $("#pagination-cont").on('click', '.pagination-button', function () {
+        
+        var page = $(this).val();
+        if(page < 1){
+            page = 1;
+        }
+        var base64 = document.getElementById('txn-stash').value;
+        console.log(page);
+        getTxnTable(base64,page);
+        
+    });
+    
+    
+    
     function getEthBalance(address){
         
         var request = $.ajax({
@@ -289,21 +303,36 @@ $( document ).ready(function() {
             edges: edges
         };
         // these are all options in full.
+        
         var options = {
             edges: {
                 smooth: {
-                    type: 'cubicBezier',
+                    type: 'dynamic',
                     forceDirection: 'horizontal',
-                    roundness: 0.0
+                    roundness: 0.1
+                },
+                color: {
+                    color:'#848484',
+                    highlight:'#848484',
+                    hover: '#848484',
+                    inherit: 'from',
+                    opacity:1.0
                 }
             },
             layout: {
                 hierarchical: {
-                    direction: 'LR'
-                }
+                levelSeparation: 110,
+                nodeSpacing: 200,
+                treeSpacing: 200,
+                blockShifting: false,
+                edgeMinimization: true,
+                parentCentralization: true,
+                direction: 'LR',        // UD, DU, LR, RL
+                sortMethod: 'directed'   // hubsize, directed
+              }
             },
             physics:false,
-            interaction:{hover:true}
+            interaction:{hover:true},
         };
         // initialize your network!
         var network = new vis.Network(container, data, options);
@@ -328,10 +357,11 @@ $( document ).ready(function() {
                 for(var i in toTotals){
 
                     counter++;
-                
-                    addressNodes.push({id : counter, label : toTotals[i]['address']});
-                    connections.push({from : nodeId, to : counter});
-                
+                    
+                    if(clickedAddress !== toTotals[i]['address']){
+                        addressNodes.push({id : counter, label : toTotals[i]['address']});
+                        connections.push({from : nodeId, to : counter});
+                    }
                     //we need to format an aray for a click event
                     formattedData[counter] = toTotals[i]['address'];
 
@@ -347,37 +377,46 @@ $( document ).ready(function() {
     function getTxnTable(base64, page){
         
         var rowStyle = '';
+        page = parseInt(page);
         var response = atob(base64);
-        response = JSON.parse(response);
-        
+        response = JSON.parse(response);  
         var arrTxns = response['txns'];
         var totalTxns = response['totalTxns'];
-        var pages = parseInt(totalTxns/30);
+        var pages = Math.ceil(totalTxns/30);
         
-        var pagination = '<nav aria-label="Page navigation example"><ul class="pagination"><li class="page-item"><a class="page-link" href="#">Previous</a></li>';
+        $(".all-txns > tbody").hide();
+        $(".all-txns > tbody").html("<tr></tr>");
         
-        
-        var i = 1;
-        
-        while(i <= pages){
-            pagination += '<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>';
-            i++;
+        if(totalTxns >= 30){
+            
+            var pagination = '<button id="pagination-button" class="btn btn-default pagination-button" type="button" value="'+(page-1)+'">Previous</button>';
+            var i = 1;
+
+            while(i <= pages){
+                pagination += '<button class="btn btn-default pagination-button" type="button" value="'+i+'">'+i+'</button>';
+                i++;
+            }
+            
+            if(page === pages){
+                pagination += '<button class="btn btn-default pagination-button" type="button" value="'+page+'">Next</button>';
+            }else{
+                pagination += '<button class="btn btn-default pagination-button" type="button" value="'+(page+1)+'">Next</button>';
+            }
+            
         }
-        
-        pagination += '<li class="page-item"><a class="page-link" href="#">Next</a></li></ul></nav>';
-         
-        var counter = 1;
-         
+
+        var counter = 1;        
+        var endCounter = 30 * page;
+        var startCounter = endCounter - 30;
+           
         for(var i in arrTxns){
    
             var fromAddress = arrTxns[i]['from'].toUpperCase();
             var toAddress = arrTxns[i]['to'].toUpperCase();
-            var endCounter = 30 * page;
-            var startCounter = endCounter - 30;
             
             address = address.toUpperCase();
 
-            if(counter >= startCounter && counter <= endCounter){
+            if(counter >= startCounter && counter < endCounter){
                 
                 if(parseFloat(arrTxns[i]['value']) !== 0.00){
                     if(address === fromAddress){
@@ -387,13 +426,14 @@ $( document ).ready(function() {
                     }
                 }
                 
-                $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
+                $('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>'+counter+'</td><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
             } 
             
             counter ++;
         }
 
         $('#pagination-cont').html(pagination);
+        $(".all-txns > tbody").fadeIn(800);
     }
 
 });
