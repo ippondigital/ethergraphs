@@ -321,10 +321,10 @@ $( document ).ready(function() {
             },
             layout: {
                 hierarchical: {
-                levelSeparation: 110,
-                nodeSpacing: 200,
-                treeSpacing: 200,
-                blockShifting: false,
+                levelSeparation: 400,
+                nodeSpacing: 125,
+                treeSpacing: 170,
+                blockShifting: true,
                 edgeMinimization: true,
                 parentCentralization: true,
                 direction: 'LR',        // UD, DU, LR, RL
