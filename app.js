@@ -1,4 +1,13 @@
 
+try {
+   var config = require('env_conf');
+    config = config.config();
+} catch (ex) {
+  console.log('couldnt load environment vars');
+}
+
+
+
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('client-sessions');
@@ -25,12 +34,14 @@ app.use(session({
 }));
 
 //set a global variable so you can call on it
-web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/RpuGTgcQkvUn8HVGSJaz"));
+//web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/RpuGTgcQkvUn8HVGSJaz"));
+web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/"+process.env.INFURA_KEY));
 global.fs = fs;
 global.web3 = web3;
 global.request = request;
 global.requestPromise = requestPromise;
 global.waitUntil = waitUntil;
+
 
 require('./routes/routes.js')(app);
 

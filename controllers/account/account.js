@@ -141,7 +141,7 @@ exports.getTxns = function(req,res){
     }else{
         requestPromise({
             method: 'POST',
-            uri: 'http://api.etherscan.io/api?module=account&action=txlist&address='+address+'&startblock=0&endblock=99999999&sort=asc&apikey=TEC67NXQJ73I6X6U1QMRV4U5QWH1Z8SQX9',
+            uri: 'http://api.etherscan.io/api?module=account&action=txlist&address='+address+'&startblock=0&endblock=99999999&sort=asc&apikey='+process.env.ETHERSCAN_KEY,
         }).then(function (parsedBody) {
         
             parsedBody = JSON.parse(parsedBody);
