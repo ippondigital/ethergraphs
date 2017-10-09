@@ -1,12 +1,10 @@
 
 try {
-   var config = require('env_conf');
-    config = config.config();
+    var env = require('dotenv');
+    env = env.config();
 } catch (ex) {
-  console.log('couldnt load environment vars');
+    console.log('couldnt load environment vars');
 }
-
-
 
 var express = require('express');
 var bodyParser = require('body-parser');
