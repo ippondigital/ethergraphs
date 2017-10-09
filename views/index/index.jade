@@ -12,6 +12,12 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
         link(href='/css/index.css', rel='stylesheet', type='text/css')
         link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
         link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
+        script(src="https://www.googletagmanager.com/gtag/js?id=UA-107716695-1")
+        script.
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-107716695-1');
 
     body
         .container
@@ -32,12 +38,6 @@ html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
                             button.btn.btn-lg.btn-success.btn-block(type='button', name='search-eth', id='search-eth') Search
                     .col-md-3
 
-    script(src="https://www.googletagmanager.com/gtag/js?id=UA-107716695-1")
-    script.
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-107716695-1');
     script(src="/js/jquery.js")
     script(src="/js/bootstrap.js")
     script(src="/js/library/index/index.js")
