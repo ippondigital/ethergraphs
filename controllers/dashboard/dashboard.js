@@ -13,7 +13,7 @@ exports.getDashboard = function(req,res) {
         }
     };
 
-    res.render('dashboard/dashboard', pageData);
+    res.render('dashboard/dashboard_new', pageData);
     
 };
 
