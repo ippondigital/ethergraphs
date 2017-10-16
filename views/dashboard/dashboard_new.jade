@@ -23,6 +23,9 @@ html(lang='en')
     link(href='../vendors/bootstrap-daterangepicker/daterangepicker.css', rel='stylesheet')
     // Custom Theme Style
     link(href='../css/gentelella.css', rel='stylesheet')
+    link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
+    link(href='/js/vis.min.css', rel='stylesheet', type='text/css')
+    link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
   body.nav-md
     .container.body
       .main_container
@@ -362,33 +365,12 @@ html(lang='en')
                       span December 30, 2014 - January 28, 2015
                       b.caret
                 .col-md-9.col-sm-9.col-xs-12
-                  #chart_plot_01.demo-placeholder
+                  #chart-container
                 .col-md-3.col-sm-3.col-xs-12.bg-white
                   .x_title
-                    h2 Top Campaign Performance
+                    h2 Title
                     .clearfix
                   .col-md-12.col-sm-12.col-xs-6
-                    div
-                      p Facebook Campaign
-                      div
-                        .progress.progress_sm(style='width: 76%;')
-                          .progress-bar.bg-green(role='progressbar', data-transitiongoal='80')
-                    div
-                      p Twitter Campaign
-                      div
-                        .progress.progress_sm(style='width: 76%;')
-                          .progress-bar.bg-green(role='progressbar', data-transitiongoal='60')
-                  .col-md-12.col-sm-12.col-xs-6
-                    div
-                      p Conventional Media
-                      div
-                        .progress.progress_sm(style='width: 76%;')
-                          .progress-bar.bg-green(role='progressbar', data-transitiongoal='40')
-                    div
-                      p Bill boards
-                      div
-                        .progress.progress_sm(style='width: 76%;')
-                          .progress-bar.bg-green(role='progressbar', data-transitiongoal='50')
                 .clearfix
           br
           .row
@@ -877,8 +859,13 @@ html(lang='en')
     script(src='../vendors/fastclick/lib/fastclick.js')
     // NProgress
     script(src='../vendors/nprogress/nprogress.js')
+    
+    script(src="/js/chartist/chartist.min.js")
+    script(src="/js/chartist/chartist-plugin-tooltip.js")
+    script(src="/js//vis.min.js")
+
     // Chart.js
-    script(src='../vendors/Chart.js/dist/Chart.min.js')
+//    script(src='../vendors/Chart.js/dist/Chart.min.js')
     // gauge.js
     script(src='../vendors/gauge.js/dist/gauge.min.js')
     // bootstrap-progressbar
@@ -888,23 +875,27 @@ html(lang='en')
     // Skycons
     script(src='../vendors/skycons/skycons.js')
     // Flot
-    script(src='../vendors/Flot/jquery.flot.js')
-    script(src='../vendors/Flot/jquery.flot.pie.js')
-    script(src='../vendors/Flot/jquery.flot.time.js')
-    script(src='../vendors/Flot/jquery.flot.stack.js')
-    script(src='../vendors/Flot/jquery.flot.resize.js')
+//    script(src='../vendors/Flot/jquery.flot.js')
+//    script(src='../vendors/Flot/jquery.flot.pie.js')
+//    script(src='../vendors/Flot/jquery.flot.time.js')
+//    script(src='../vendors/Flot/jquery.flot.stack.js')
+//    script(src='../vendors/Flot/jquery.flot.resize.js')
     // Flot plugins
-    script(src='../vendors/flot.orderbars/js/jquery.flot.orderBars.js')
-    script(src='../vendors/flot-spline/js/jquery.flot.spline.min.js')
-    script(src='../vendors/flot.curvedlines/curvedLines.js')
+//    script(src='../vendors/flot.orderbars/js/jquery.flot.orderBars.js')
+//    script(src='../vendors/flot-spline/js/jquery.flot.spline.min.js')
+//    script(src='../vendors/flot.curvedlines/curvedLines.js')
     // DateJS
     script(src='../vendors/DateJS/build/date.js')
     // JQVMap
     script(src='../vendors/jqvmap/dist/jquery.vmap.js')
     script(src='../vendors/jqvmap/dist/maps/jquery.vmap.world.js')
-    script(src='../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')
+    
+    script(src="/js/library/dashboard/dashboard.js")
+    
+//    script(src='../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')
     // bootstrap-daterangepicker
-    script(src='../vendors/moment/min/moment.min.js')
-    script(src='../vendors/bootstrap-daterangepicker/daterangepicker.js')
+//    script(src='../vendors/moment/min/moment.min.js')
+//    script(src='../vendors/bootstrap-daterangepicker/daterangepicker.js')
     // Custom Theme Scripts
-    script(src='/js/gentelella.js')
+//    script(src='/js/gentelella.js')
+    
