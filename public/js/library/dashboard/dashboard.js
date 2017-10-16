@@ -5,34 +5,7 @@
  */
 
 $( document ).ready(function() {
-
-    $('.crypto-results').hide();
-    $('.alt-loader').hide();
-    $(".ether-cont").hide();
-    $(".top-10").hide();
-    $(".crypto-txns").hide();
-    $('#chart-container').hide();
-    $('.alert').hide();
-    $('.temp-loading').show();
-    $(".ether-cont").hide();
-    $(".ethereum-balance").hide();
-    $('.alt-loader').hide();
-    $('#chart-container').hide();
-    $(".crypto-value").val("");
-    $(".crypto-balance").html("");
-    $(".txn-table tbody").empty();
-    $(".table-sent tbody").empty();
-    $(".table-received tbody").empty();
-    $("#crypto-txns").hide();
-    $('.top-10-sent').hide();
-    $('.top-10-received').hide();
-    $('.total-gas').html('');
-    $('.total-failed').html('');
-    $('.total-cont').hide();
-    
-    //load stuff in first
-    $('.top-menu').fadeIn(800);
-    
+   
     var timer;
     var tokens;
     
@@ -59,11 +32,6 @@ $( document ).ready(function() {
 
         getAltBalance(address, 0);
         
-        $(".ether-cont").fadeIn(800);
-        $(".ethereum-balance").fadeIn();
-        $('.alt-loader').fadeIn(800);
-        //load crypto results
-        $('.crypto-results').fadeIn();
     }
     
     $('#search-eth-again').on("click", function (){
@@ -101,7 +69,9 @@ $( document ).ready(function() {
 
             for(var i in arrResponse){
                 var balance = arrResponse[i]['balance'];
-                $(".ethereum-balance").html(address +'<br />ETH Balance: '+ parseFloat(balance).toFixed(2));
+                //address
+                $(".eth-address").html(address);
+                $(".eth-balance").html(numberWithCommas(parseFloat(balance).toFixed(2)));
             }
  
         });
@@ -201,15 +171,14 @@ $( document ).ready(function() {
                 //$('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
             }
             
-            var fromCounter = 0;
-            var toCounter = 0;
+            var fromCounter = 1;
+            var toCounter = 1;
             
-            $('.top-10-received').fadeIn(800);
             $('.table-received tbody').append('<tr></tr>');
             
             for(var i in fromTotals){
-                if(fromCounter < 10){           
-                    $('.table-received tr:last').after('<tr><<td><a href="http://ethergraphs.com/dashboard/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'].toFixed(2) + '</td></tr>');
+                if(fromCounter < 11){           
+                    $('.table-received tr:last').after('<tr><td>'+fromCounter+'</td><td><a href="http://ethergraphs.com/dashboard/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'].toFixed(2) + '</td></tr>');
                     fromCounter ++;
                 }  
             }
@@ -218,17 +187,17 @@ $( document ).ready(function() {
             $('.table-sent tbody').append('<tr></tr>');
             
             for(var i in toTotals){
-                if(toCounter < 10){
-                    $('.table-sent tr:last').after('<tr><<td><a href="http://ethergraphs.com/dashboard/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'].toFixed(2) + '</td></tr>');
+                if(toCounter < 11){
+                    $('.table-sent tr:last').after('<tr><td>'+toCounter+'</td><td><a href="http://ethergraphs.com/dashboard/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'].toFixed(2) + '</td></tr>');
                     toCounter ++;
                 }  
             }
             
-            $('.total-txns').html('<h5 class="crypto-title text-center">Total Txn\'s <h5><h4 class="crypto-title text-center">'+totalTxns+'<h4>');
-            $('.total-gas').html('<h5 class="crypto-title text-center"> Total Gas Used<h5><h4 class="crypto-title text-center">'+gasTotal+'<h4>');
-            $('.total-failed').html('<h5 class="crypto-title text-center">Total Failed Txns<h5><h4 class="crypto-title text-center">'+failedTotal+'<h4>');
-            $('.grand-total-to').html('<h5 class="crypto-title text-center">Total Sent<h5><h4 class="crypto-title text-center">'+grandTotalTo.toFixed(2)+' ETH<h4>');
-            $('.grand-total-from').html('<h5 class="crypto-title text-center">Total Received <h5><h4 class="crypto-title text-center">'+grandTotalFrom.toFixed(2)+' ETH<h4>');
+            $('.total-txns').html(numberWithCommas(totalTxns));
+            $('.total-gas').html(numberWithCommas(gasTotal));
+            $('.total-failed').html(numberWithCommas(failedTotal));
+            $('.grand-total-to').html(numberWithCommas(grandTotalTo.toFixed(2)));
+            $('.grand-total-from').html(numberWithCommas(grandTotalFrom.toFixed(2)));
 
             var data = {
                 // A labels array that can contain any sort of values
@@ -434,6 +403,10 @@ $( document ).ready(function() {
 
         $('#pagination-cont').html(pagination);
         $(".all-txns > tbody").fadeIn(800);
+    }
+    
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 });

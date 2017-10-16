@@ -886,7 +886,7 @@ a:focus {
 }
 .panel_toolbox {
     float: right;
-    min-width: 70px
+    min-width: 50px
 }
 .panel_toolbox>li {
     float: left;
