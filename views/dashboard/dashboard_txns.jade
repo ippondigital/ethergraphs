@@ -1,6 +1,50 @@
 //dashboard_txns.jade
 br
 .row
+  .col-md-6.col-sm-6.col-xs-12
+      .x_panel
+        .x_title
+          h2
+            | Top 10 Sent
+          ul.nav.navbar-right.panel_toolbox
+            li
+              a.collapse-link
+                i.fa.fa-chevron-up
+            li
+              a.close-link
+                i.fa.fa-close
+          .clearfix
+        .x_content
+          table.table.table-striped.table-sent.specifictd
+            thead
+              tr
+                th #
+                th Address
+                th Total Eth
+            tbody
+  .col-md-6.col-sm-6.col-xs-12
+      .x_panel
+        .x_title
+          h2
+            | Top 10 Received
+          ul.nav.navbar-right.panel_toolbox
+            li
+              a.collapse-link
+                i.fa.fa-chevron-up
+            li
+              a.close-link
+                i.fa.fa-close
+          .clearfix
+        .x_content
+          table.table.table-striped.table-received.specifictd
+            thead
+              tr
+                th #
+                th Address
+                th Total Eth
+            tbody
+br
+.row
   .col-md-12.col-sm-12.col-xs-12
       .x_panel
         .x_title
@@ -17,7 +61,7 @@ br
         .x_content
             #pagination-cont.text-center
             #crypto-txns.crypto-txns
-                table.table.table-striped.specifictd.all-txns
+                table.table.table-responsive.specifictd.all-txns
                     thead
                         tr
                             th #

@@ -12,6 +12,33 @@ body{
     font-size: smaller;
 }
 
+#network-container{
+    height: 500px;
+}
+
+a{
+    font-weight: bold;
+}
+
+.address-search{
+    padding: 10px;
+}
+
+.nav_title{
+    
+    text-align: center;
+    height: auto;
+    margin-top: 15px;
+    
+    img{
+        margin: 0 auto;
+        max-width: 90%;
+        height: auto;
+    }
+    
+}
+
+
 @media (max-width: 768px) { /* use the max to specify at each container level */
     .specifictd {    
         width:360px;  /* adjust to desired wrapping */
