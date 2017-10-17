@@ -1,0 +1,217 @@
+doctype html
+html(lang='en')
+  head
+    meta(name='Author', content='ippon digital')
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi')
+    title EtherGraphs beta - Ethereum Blockchain Visualiser
+    // Bootstrap
+    link(href='../vendors/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    // Font Awesome
+    link(href='../vendors/font-awesome/css/font-awesome.min.css', rel='stylesheet')
+    // NProgress
+    link(href='../vendors/nprogress/nprogress.css', rel='stylesheet')
+    // iCheck
+    link(href='../vendors/iCheck/skins/flat/green.css', rel='stylesheet')
+    // bootstrap-progressbar
+    link(href='../vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css', rel='stylesheet')
+    // JQVMap
+    link(href='../vendors/jqvmap/dist/jqvmap.min.css', rel='stylesheet')
+    // bootstrap-daterangepicker
+    link(href='../vendors/bootstrap-daterangepicker/daterangepicker.css', rel='stylesheet')
+    // Custom Theme Style
+    link(href='/css/gentelella.css', rel='stylesheet')
+
+    link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
+    link(href='/css/vis.min.css', rel='stylesheet', type='text/css')
+    link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
+    link(href='/css/dashboard.css', rel='stylesheet')
+    script(src="https://www.googletagmanager.com/gtag/js?id=UA-107716695-1")
+    script.
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-107716695-1');
+
+  body.nav-md
+    .container.body
+      .main_container
+        .col-md-3.left_col
+          .left_col.scroll-view
+            .navbar.nav_title(style='border: 0; text-align: center;')
+                a.site_title(href='http://www.ethergraphs.com')
+                    img.img.img-responsive(src="/img/etherstat_small.png", alt="etherstat logo")
+            .clearfix
+            // sidebar menu
+            #sidebar-menu.main_menu_side.hidden-print.main_menu
+              .menu_section
+                ul.nav.side-menu
+                  li
+                    a.dashboard-btn
+                      i.fa.fa-bar-chart
+                      |  Home 
+                  li
+                    a.tokens-btn
+                      i.fa.fa-tags
+                      |  Token Balances
+                  li
+                    a.txns-btn
+                      i.fa.fa-table
+                      |  Transactions
+            // /sidebar menu
+            // /menu footer buttons
+        // top navigation
+        .top_nav
+          .nav_menu
+            nav
+              .nav.toggle
+                a#menu_toggle
+                  i.fa.fa-bars
+              ul.nav.navbar-nav.navbar-right
+                li
+                    .address-search
+                        .row
+                            .col-md-7.col-sm-6.col-xs-0
+                            .input-group.col-md-5.col-sm-6.col-xs-12
+                                input.form-control(type='input', name='ethAddressAgain', id='ethAddressAgain', placeholder='enter wallet address', value='')
+                                span.input-group-btn
+                                    button.btn.btn-success(type='button', name='search-eth-again', id='search-eth-again') Search
+                                .clearfix
+                                input(type='hidden', name='currentAddress', id='currentAddress' value='#{pageData.address}')
+                                input.handshake(type='hidden',name='handshake',value='#{pageData.handshake}')
+                                input#txn-stash(type='hidden',name='txn-stash',value='')
+                        .row
+                            .col-md-7.col-sm-6.col-xs-0
+                            .col-md-5.col-sm-6.col-xs-12
+                                p.crypto-title
+                                    | If you find this useful, please
+                                    | <a href="https://etherscan.io/address/0x55454510732482cC62544d16f726a0e7e7E5D6D6" target="_blank">donate</a>
+                                    | to keep this project going
+                  
+        // /top navigation
+        // page content
+        .right_col(role='main')
+          // top tiles
+          .row.tile_count
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-globe
+                |  Total Txns
+              .count.total-txns
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-fire
+                |  Total Gas
+              .count.total-gas
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-thumbs-o-down
+                |  Total Failed
+              .count.total-failed
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-arrow-circle-right
+                |  Total Sent
+              .count.grand-total-to
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-envelope-o
+                |  Total Received
+              .count.grand-total-from
+            .col-md-2.col-sm-4.col-xs-6.tile_stats_count
+              span.count_top
+                i.fa.fa-user
+                |  Avg Sent Amt
+              .count.avg-sent
+          // /top tiles
+          .row
+            .col-md-8.col-sm-8.col-xs-12
+                .x_panel
+                  .x_title
+                    h2
+                      | Address
+                    ul.nav.navbar-right.panel_toolbox
+                      li
+                        a.collapse-link
+                          i.fa.fa-chevron-up
+                      li
+                        a.close-link
+                          i.fa.fa-close
+                    .clearfix
+                  .x_content
+                    .eth-address
+            .col-md-4.col-sm-4.col-xs-12
+                .x_panel
+                  .x_title
+                    h2
+                      | Eth Balance
+                    ul.nav.navbar-right.panel_toolbox
+                      li
+                        a.collapse-link
+                          i.fa.fa-chevron-up
+                      li
+                        a.close-link
+                          i.fa.fa-close
+                    .clearfix
+                  .x_content
+                    .eth-balance
+          .dashboard_main
+            include dashboard_main
+          .dashboard_txns
+            include dashboard_txns
+          .dashboard_tokens
+            include dashboard_tokens
+        // /page content
+        // footer content
+        footer
+          .pull-right
+            | Copyright 2017 - Ippon Digital 
+            a(href='https://github.com/ippondigital') Find Us on Github
+          .clearfix
+        // /footer content
+    // jQuery
+    script(src='../vendors/jquery/dist/jquery.min.js')
+    // Bootstrap
+    script(src='../vendors/bootstrap/dist/js/bootstrap.min.js')
+
+    script(src="/js/chartist/chartist.min.js")
+    script(src="/js/chartist/chartist-plugin-tooltip.js")
+    script(src="/js/vis.min.js")
+    script(src="/js/library/dashboard/dashboard.js")
+
+
+    // FastClick
+    script(src='../vendors/fastclick/lib/fastclick.js')
+    // NProgress
+    script(src='../vendors/nprogress/nprogress.js')
+    // Chart.js
+    script(src='../vendors/Chart.js/dist/Chart.min.js')
+    // gauge.js
+    script(src='../vendors/gauge.js/dist/gauge.min.js')
+    // bootstrap-progressbar
+    script(src='../vendors/bootstrap-progressbar/bootstrap-progressbar.min.js')
+    // iCheck
+    script(src='../vendors/iCheck/icheck.min.js')
+    // Skycons
+    script(src='../vendors/skycons/skycons.js')
+    // Flot
+    script(src='../vendors/Flot/jquery.flot.js')
+    script(src='../vendors/Flot/jquery.flot.pie.js')
+    script(src='../vendors/Flot/jquery.flot.time.js')
+    script(src='../vendors/Flot/jquery.flot.stack.js')
+    script(src='../vendors/Flot/jquery.flot.resize.js')
+    // Flot plugins
+    script(src='../vendors/flot.orderbars/js/jquery.flot.orderBars.js')
+    script(src='../vendors/flot-spline/js/jquery.flot.spline.min.js')
+    script(src='../vendors/flot.curvedlines/curvedLines.js')
+    // DateJS
+    script(src='../vendors/DateJS/build/date.js')
+    // JQVMap
+    script(src='../vendors/jqvmap/dist/jquery.vmap.js')
+    script(src='../vendors/jqvmap/dist/maps/jquery.vmap.world.js')
+    script(src='../vendors/jqvmap/examples/js/jquery.vmap.sampledata.js')
+    // bootstrap-daterangepicker
+    script(src='../vendors/moment/min/moment.min.js')
+    script(src='../vendors/bootstrap-daterangepicker/daterangepicker.js')
+    // Custom Theme Scripts
+    script(src='/js/gentelella.js')

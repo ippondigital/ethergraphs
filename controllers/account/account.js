@@ -262,7 +262,6 @@ exports.getTxns = function(req,res){
             arrRtn['grandTotalTo'] = grandTotalTo;
             arrRtn['grandTotalFrom'] = grandTotalFrom;
             arrRtn['totalTxns'] = totalTxns;
-
             var jsonResponse = JSON.stringify(arrRtn);
 
             res.status(200);

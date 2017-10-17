@@ -5,34 +5,11 @@
  */
 
 $( document ).ready(function() {
-
-    $('.crypto-results').hide();
-    $('.alt-loader').hide();
-    $(".ether-cont").hide();
-    $(".top-10").hide();
-    $(".crypto-txns").hide();
-    $('#chart-container').hide();
-    $('.alert').hide();
-    $('.temp-loading').show();
-    $(".ether-cont").hide();
-    $(".ethereum-balance").hide();
-    $('.alt-loader').hide();
-    $('#chart-container').hide();
-    $(".crypto-value").val("");
-    $(".crypto-balance").html("");
-    $(".txn-table tbody").empty();
-    $(".table-sent tbody").empty();
-    $(".table-received tbody").empty();
-    $("#crypto-txns").hide();
-    $('.top-10-sent').hide();
-    $('.top-10-received').hide();
-    $('.total-gas').html('');
-    $('.total-failed').html('');
-    $('.total-cont').hide();
-    
-    //load stuff in first
-    $('.top-menu').fadeIn(800);
-    
+   
+    $(".dashboard_main").hide();
+    $(".dashboard_txns").hide();
+    $(".dashboard_tokens").hide();
+   
     var timer;
     var tokens;
     
@@ -55,18 +32,34 @@ $( document ).ready(function() {
         //clear the timeout if its running
         clearTimeout(timer);
         //get all balances
-        $(".crypto-balance").fadeIn();
-
-        getAltBalance(address, 0);
+        $(".dashboard_main").fadeIn(800);
         
-        $(".ether-cont").fadeIn(800);
-        $(".ethereum-balance").fadeIn();
-        $('.alt-loader').fadeIn(800);
-        //load crypto results
-        $('.crypto-results').fadeIn();
+        getAltBalance(address, 0);
+                
     }
     
-    $('#search-eth-again').on("click", function (){
+    $('.dashboard-btn').on("click", function (){
+        $(".dashboard_main").fadeIn(800);
+        $(".dashboard_network").hide();
+        $(".dashboard_txns").hide();
+        $(".dashboard_tokens").hide();
+    });
+    
+    $('.txns-btn').on("click", function (){
+        $(".dashboard_main").hide();
+        $(".dashboard_network").hide();
+        $(".dashboard_txns").fadeIn(800);
+        $(".dashboard_tokens").hide();
+    });
+    
+    $('.tokens-btn').on("click", function (){
+        $(".dashboard_main").hide();
+        $(".dashboard_network").hide();
+        $(".dashboard_txns").hide();
+        $(".dashboard_tokens").fadeIn(800);
+    });
+    
+    $(document.body).on('click',"#search-eth-again",function(){
         var address = $("#ethAddressAgain").val();
         //update url
         window.location.href = '/dashboard/' + address;
@@ -83,9 +76,7 @@ $( document ).ready(function() {
         getTxnTable(base64,page);
         
     });
-    
-    
-    
+
     function getEthBalance(address){
         
         var request = $.ajax({
@@ -101,7 +92,9 @@ $( document ).ready(function() {
 
             for(var i in arrResponse){
                 var balance = arrResponse[i]['balance'];
-                $(".ethereum-balance").html(address +'<br />ETH Balance: '+ parseFloat(balance).toFixed(2));
+                //address
+                $(".eth-address").html(address);
+                $(".eth-balance").html(numberWithCommas(parseFloat(balance).toFixed(2)));
             }
  
         });
@@ -117,8 +110,8 @@ $( document ).ready(function() {
                         
         timer = setTimeout(function(){
             
-            $('.alt-loader-text').html('Searching for ' + tokens[i]['symbol']);
-            $('.alt-loader-text').fadeIn();
+            $('.token-loader-text').html('Searching for ' + tokens[i]['symbol']);
+            $('.token-loader-text').fadeIn();
                         
             var request = $.ajax({
                 url: "/account/" + address + "/token/" + tokens[i]['symbol'] + '/' + tokens[i]['address']+ "?handshake="+$('.handshake').val(),
@@ -131,8 +124,8 @@ $( document ).ready(function() {
                 var arrToken = JSON.parse(response);
 
                 if(arrToken[0]['balance'] > 0){
-                    var html = '<div class="dashboard"><div class="col-xs-6 text-center">' + arrToken[0]['symbol'].trim() + '</div><div class="col-xs-6 text-center">' + parseFloat(arrToken[0]['balance']).toFixed(2) + '</div></div>';
-                    $(html).hide().appendTo(".crypto-balance").fadeIn(1000);
+                    var html = '<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12"><div class="tile-stats"><div class="icon"></div><div class="count">' + numberWithCommas(parseFloat(arrToken[0]['balance']).toFixed(2)) + '</div><h3>' + arrToken[0]['symbol'].trim() + '</h3></div></div>';
+                    $(html).hide().appendTo(".token-cont").fadeIn(1000);
                 }
 
             });
@@ -143,7 +136,7 @@ $( document ).ready(function() {
             
         },2000);
 
-        $('.alt-loader-text').fadeOut(1500);
+        $('.token-loader-text').fadeOut(1500);
 
      }
      
@@ -169,7 +162,7 @@ $( document ).ready(function() {
             var grandTotalTo = result['grandTotalTo'];
             var grandTotalFrom = result['grandTotalFrom'];
             var totalTxns = result['totalTxns'];
-            
+            var avgSent = Number(grandTotalTo)/Number(totalTxns);
             var labels = [];
             var series = [];
             var counter = 0;
@@ -201,15 +194,14 @@ $( document ).ready(function() {
                 //$('.crypto-txns tr:last').after('<tr class="'+rowStyle+'"><td>' + arrTxns[i]['fullDate'] + '</td><td><a href="https://etherscan.io/tx/'+arrTxns[i]['hash']+'" target="_blank" data-toggle="tooltip" title="'+arrTxns[i]['hash']+'">' + arrTxns[i]['hash'].substring(0, 15) + '...<a/></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['from'].toLowerCase() + '" target="_blank">' + arrTxns[i]['from'] + '</a></td><td><a href="https://etherscan.io/address/' + arrTxns[i]['to'].toLowerCase() + '" target="_blank">' + arrTxns[i]['to'] + '</a></td><td>' + arrTxns[i]['value'] + '</td><td>' + arrTxns[i]['gasUsed'] + '</td></tr>');
             }
             
-            var fromCounter = 0;
-            var toCounter = 0;
+            var fromCounter = 1;
+            var toCounter = 1;
             
-            $('.top-10-received').fadeIn(800);
             $('.table-received tbody').append('<tr></tr>');
             
             for(var i in fromTotals){
-                if(fromCounter < 10){           
-                    $('.table-received tr:last').after('<tr><<td><a href="http://ethergraphs.com/dashboard/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'].toFixed(2) + '</td></tr>');
+                if(fromCounter < 11){           
+                    $('.table-received tr:last').after('<tr><td>'+fromCounter+'</td><td><a href="http://ethergraphs.com/dashboard/' + fromTotals[i]['address'].toLowerCase() + '" target="_blank">' + fromTotals[i]['address'] + '</a></td><td>' + fromTotals[i]['value'].toFixed(2) + '</td></tr>');
                     fromCounter ++;
                 }  
             }
@@ -218,17 +210,18 @@ $( document ).ready(function() {
             $('.table-sent tbody').append('<tr></tr>');
             
             for(var i in toTotals){
-                if(toCounter < 10){
-                    $('.table-sent tr:last').after('<tr><<td><a href="http://ethergraphs.com/dashboard/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'].toFixed(2) + '</td></tr>');
+                if(toCounter < 11){
+                    $('.table-sent tr:last').after('<tr><td>'+toCounter+'</td><td><a href="http://ethergraphs.com/dashboard/' + toTotals[i]['address'].toLowerCase() + '" target="_blank">' + toTotals[i]['address'] + '</a></td><td>' + toTotals[i]['value'].toFixed(2) + '</td></tr>');
                     toCounter ++;
                 }  
             }
             
-            $('.total-txns').html('<h5 class="crypto-title text-center">Total Txn\'s <h5><h4 class="crypto-title text-center">'+totalTxns+'<h4>');
-            $('.total-gas').html('<h5 class="crypto-title text-center"> Total Gas Used<h5><h4 class="crypto-title text-center">'+gasTotal+'<h4>');
-            $('.total-failed').html('<h5 class="crypto-title text-center">Total Failed Txns<h5><h4 class="crypto-title text-center">'+failedTotal+'<h4>');
-            $('.grand-total-to').html('<h5 class="crypto-title text-center">Total Sent<h5><h4 class="crypto-title text-center">'+grandTotalTo.toFixed(2)+' ETH<h4>');
-            $('.grand-total-from').html('<h5 class="crypto-title text-center">Total Received <h5><h4 class="crypto-title text-center">'+grandTotalFrom.toFixed(2)+' ETH<h4>');
+            $('.total-txns').html(numberWithCommas(totalTxns));
+            $('.total-gas').html(numberWithCommas(gasTotal));
+            $('.total-failed').html(numberWithCommas(failedTotal));
+            $('.grand-total-to').html(numberWithCommas(grandTotalTo.toFixed(2)));
+            $('.grand-total-from').html(numberWithCommas(grandTotalFrom.toFixed(2)));
+            $('.avg-sent').html(numberWithCommas(avgSent.toFixed(2)));
 
             var data = {
                 // A labels array that can contain any sort of values
@@ -253,12 +246,12 @@ $( document ).ready(function() {
             for(var i in toTotals){
                 
                 if(counter == 1){
-                    addressNodes.push({id : counter, label : address});
+                    addressNodes.push({id : counter, label : address, title : ''});
                 }
                 
                 counter++;
                 
-                addressNodes.push({id : counter, label : toTotals[i]['address']});
+                addressNodes.push({id : counter, label : toTotals[i]['address'], title : 'total sent : ' + toTotals[i]['value'] + ' ETH'});
                 connections.push({from : 1, to : counter});
                 
                 //we need to format an aray for a click event
@@ -305,34 +298,55 @@ $( document ).ready(function() {
         // these are all options in full.
         
         var options = {
+            autoResize: false,
+            height: '100%',
+            width: '100%',
+            locale: 'en',
             edges: {
                 smooth: {
                     type: 'dynamic',
                     forceDirection: 'horizontal',
-                    roundness: 0.1
-                },
-                color: {
-                    color:'#848484',
-                    highlight:'#848484',
-                    hover: '#848484',
-                    inherit: 'from',
-                    opacity:1.0
+                    roundness: 0.5
                 }
             },
             layout: {
+                randomSeed: undefined,
+                improvedLayout:true,
                 hierarchical: {
-                levelSeparation: 400,
-                nodeSpacing: 125,
-                treeSpacing: 170,
-                blockShifting: true,
-                edgeMinimization: true,
-                parentCentralization: true,
-                direction: 'LR',        // UD, DU, LR, RL
-                sortMethod: 'directed'   // hubsize, directed
-              }
+                    levelSeparation: 400,
+                    nodeSpacing: 50,
+                    treeSpacing: 170,
+                    blockShifting: false,
+                    edgeMinimization: true,
+                    parentCentralization: false,
+                    direction: 'LR',        // UD, DU, LR, RL
+                    sortMethod: 'directed'   // hubsize, directed
+                }
             },
-            physics:false,
-            interaction:{hover:true},
+            nodes: {
+                shape: 'box',
+                color: {
+                    border: '#cccccc',
+                    background: '#cccccc',
+                highlight: {
+                    border: '#cccccc',
+                    background: '#cccccc'
+                    },
+                hover: {
+                    border: '#cccccc',
+                    background: '#cccccc'
+                    }
+                },
+                font: {
+                    color: 'black'
+                }
+            },
+            physics: {
+                enabled: false
+            },
+            interaction:{
+                hover:true
+            }
         };
         // initialize your network!
         var network = new vis.Network(container, data, options);
@@ -434,6 +448,10 @@ $( document ).ready(function() {
 
         $('#pagination-cont').html(pagination);
         $(".all-txns > tbody").fadeIn(800);
+    }
+    
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
 });
