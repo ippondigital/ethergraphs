@@ -6,6 +6,11 @@
 
 $( document ).ready(function() {
    
+    $(".dashboard_main").hide();
+    $(".dashboard_network").hide();
+    $(".dashboard_txns").hide();
+    $(".dashboard_tokens").hide();
+   
     var timer;
     var tokens;
     
@@ -28,11 +33,31 @@ $( document ).ready(function() {
         //clear the timeout if its running
         clearTimeout(timer);
         //get all balances
-        $(".crypto-balance").fadeIn();
-
+        $(".dashboard_main").fadeIn(800);
         getAltBalance(address, 0);
         
     }
+    
+    $('.dashboard-btn').on("click", function (){
+        $(".dashboard_main").fadeIn(800);
+        $(".dashboard_network").hide();
+        $(".dashboard_txns").hide();
+        $(".dashboard_tokens").hide();
+    });
+    
+    $('.network-btn').on("click", function (){
+        $(".dashboard_main").hide();
+        $(".dashboard_network").fadeIn(800);
+        $(".dashboard_txns").hide();
+        $(".dashboard_tokens").hide();
+    });
+    
+    $('.txns-btn').on("click", function (){
+        $(".dashboard_main").hide();
+        $(".dashboard_network").hide();
+        $(".dashboard_txns").fadeIn(800);
+        $(".dashboard_tokens").hide();
+    });
     
     $('#search-eth-again').on("click", function (){
         var address = $("#ethAddressAgain").val();
@@ -235,7 +260,7 @@ $( document ).ready(function() {
                 
             }
             
-            drawNetwork(addressNodes,connections,formattedData,counter, address);
+            //drawNetwork(addressNodes,connections,formattedData,counter, address);
             
             $('.temp-loading').fadeOut();
             

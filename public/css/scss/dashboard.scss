@@ -8,6 +8,10 @@ body{
     font-size: 28px;
 }
 
+.all-txns{
+    font-size: smaller;
+}
+
 @media (max-width: 768px) { /* use the max to specify at each container level */
     .specifictd {    
         width:360px;  /* adjust to desired wrapping */

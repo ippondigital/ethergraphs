@@ -25,7 +25,7 @@ html(lang='en')
     link(href='/css/gentelella.css', rel='stylesheet')
 
     link(href='/js/chartist/chartist.css', rel='stylesheet', type='text/css')
-    link(href='/js/vis.min.css', rel='stylesheet', type='text/css')
+    link(href='/css/vis.min.css', rel='stylesheet', type='text/css')
     link(href='/js/chartist/chartist-plugin-tooltip.css', rel='stylesheet', type='text/css')
     link(href='/css/dashboard.css', rel='stylesheet')
     script(src="https://www.googletagmanager.com/gtag/js?id=UA-107716695-1")
@@ -50,19 +50,19 @@ html(lang='en')
               .menu_section
                 ul.nav.side-menu
                   li
-                    a
+                    a.dashboard-btn
                       i.fa.fa-home
                       |  Home 
                   li
-                    a
+                    a.network-btn
                       i.fa.fa-home
                       |  Network
                   li
-                    a
+                    a.tokens-btn
                       i.fa.fa-home
                       |  Token Balances
                   li
-                    a
+                    a.txns-btn
                       i.fa.fa-home
                       |  Transactions
             // /sidebar menu
@@ -152,8 +152,10 @@ html(lang='en')
                     .clearfix
                   .x_content
                     .eth-balance
-
-          include dashboard_main
+          .dashboard_main
+            include dashboard_main
+          .dashboard_txns
+            include dashboard_txns
         // /page content
         // footer content
         footer

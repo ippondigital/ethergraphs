@@ -1,0 +1,31 @@
+//dashboard_txns.jade
+br
+.row
+  .col-md-12.col-sm-12.col-xs-12
+      .x_panel
+        .x_title
+          h2
+            | Transactions
+          ul.nav.navbar-right.panel_toolbox
+            li
+              a.collapse-link
+                i.fa.fa-chevron-up
+            li
+              a.close-link
+                i.fa.fa-close
+          .clearfix
+        .x_content
+            #pagination-cont.text-center
+            #crypto-txns.crypto-txns
+                table.table.table-striped.specifictd.all-txns
+                    thead
+                        tr
+                            th #
+                            th Date
+                            th Txn Hash
+                            th From
+                            th To
+                            th Value
+                            th Gas Used
+                    tbody   
+
